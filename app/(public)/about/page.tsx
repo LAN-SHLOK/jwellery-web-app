@@ -1,12 +1,9 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Award, Heart, Shield, Sparkles } from 'lucide-react';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Our Heritage',
-  description: 'Three decades of handcrafted 22K gold jewellery. BIS hallmarked, transparently priced, and designed with modern Indian luxury in mind.',
-};
 
 const values = [
   {
@@ -59,86 +56,205 @@ const processSteps = [
 ];
 
 export default function AboutPage() {
+  const { scrollYProgress } = useScroll();
+  const heroY = useTransform(scrollYProgress, [0, 0.3], [0, 100]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+
   return (
     <div className="min-h-screen">
-      <section className="relative overflow-hidden px-4 pb-18 pt-12 text-white md:px-8 md:pb-24 md:pt-18">
+      <motion.section 
+        className="relative overflow-hidden px-4 pb-18 pt-12 text-white md:px-8 md:pb-24 md:pt-18"
+        style={{ y: heroY, opacity: heroOpacity }}
+      >
         <div className="absolute inset-0 bg-brand-primary" />
-        <div className="halo-orb left-[10%] top-20 h-56 w-56 bg-[radial-gradient(circle,rgba(214,190,118,0.16)_0%,transparent_72%)]" />
-        <div className="halo-orb right-[12%] top-28 h-72 w-72 bg-[radial-gradient(circle,rgba(214,190,118,0.12)_0%,transparent_76%)]" />
+        <motion.div 
+          className="halo-orb left-[10%] top-20 h-56 w-56 bg-[radial-gradient(circle,rgba(214,190,118,0.16)_0%,transparent_72%)]"
+          animate={{ scale: [1, 1.2, 1], x: [0, 30, 0] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className="halo-orb right-[12%] top-28 h-72 w-72 bg-[radial-gradient(circle,rgba(214,190,118,0.12)_0%,transparent_76%)]"
+          animate={{ scale: [1, 1.15, 1], x: [0, -20, 0] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        />
 
         <div className="relative mx-auto max-w-6xl">
-          <div className="luxury-outline rounded-[2rem] border border-white/10 bg-white/5 px-6 py-10 md:px-10 md:py-14">
-            <p className="section-kicker text-brand-accent/90">The House Story</p>
-            <h1 className="mt-5 max-w-4xl font-serif text-5xl leading-[0.9] md:text-7xl lg:text-[5.6rem]">
+          <motion.div 
+            className="luxury-outline rounded-[2rem] border border-white/10 bg-white/5 px-6 py-10 md:px-10 md:py-14"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.p 
+              className="section-kicker text-brand-accent/90"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              The House Story
+            </motion.p>
+            <motion.h1 
+              className="mt-5 max-w-4xl font-serif text-5xl leading-[0.9] md:text-7xl lg:text-[5.6rem]"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+            >
               Jewellery that respects legacy without feeling trapped in it.
-            </h1>
-            <p className="mt-6 max-w-2xl text-sm leading-8 text-white/62 md:text-base">
+            </motion.h1>
+            <motion.p 
+              className="mt-6 max-w-2xl text-sm leading-8 text-white/75 md:text-base"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
               The brand language here is rooted in Indian craftsmanship, but the buying experience is intentionally cleaner, slower, and more premium than a typical catalogue grid.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       <section className="mx-auto max-w-6xl px-4 py-18 md:px-8 md:py-24">
         <div className="grid gap-8 md:grid-cols-2">
-          <div className="luxury-panel rounded-[2rem] p-8 md:p-10">
+          <motion.div 
+            className="luxury-panel rounded-[2rem] p-8 md:p-10"
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            whileHover={{ scale: 1.02, boxShadow: "0 25px 50px rgba(0,0,0,0.1)" }}
+          >
             <p className="section-kicker">Why this matters</p>
             <h2 className="mt-4 font-serif text-4xl leading-none text-brand-primary">The customer should feel certainty before they ever feel urgency.</h2>
-          </div>
-          <div className="flex items-center">
+          </motion.div>
+          <motion.div 
+            className="flex items-center"
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <p className="text-sm leading-8 copy-muted md:text-base">
               That is why this storefront emphasizes hallmark confidence, product clarity, and rate transparency first. The aesthetic is there to elevate the work, not distract from it.
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-4 pb-18 md:px-8 md:pb-24">
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {values.map((value, index) => (
-            <div
+            <motion.div
               key={value.title}
-              className="luxury-panel rounded-[1.8rem] p-7 animate-fade-in-up"
-              style={{ animationDelay: `${index * 0.07}s` }}
+              className="luxury-panel rounded-[1.8rem] p-7"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: index * 0.1, duration: 0.6 }}
+              whileHover={{ y: -10, boxShadow: "0 30px 60px rgba(0,0,0,0.15)" }}
             >
-              <div className="inline-flex rounded-full border border-black/8 bg-white/58 p-3 text-brand-accent">
+              <motion.div 
+                className="inline-flex rounded-full border border-black/8 bg-white/58 p-3 text-brand-accent"
+                whileHover={{ rotate: 360, scale: 1.15 }}
+                transition={{ duration: 0.5 }}
+              >
                 <value.icon size={18} />
-              </div>
+              </motion.div>
               <h3 className="mt-5 font-serif text-3xl leading-none text-brand-primary">{value.title}</h3>
               <p className="mt-4 text-sm leading-7 copy-muted">{value.description}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
       <section className="px-4 pb-18 md:px-8 md:pb-24">
-        <div className="mx-auto max-w-6xl luxury-panel rounded-[2rem] p-8 md:p-12">
-          <div className="mb-10">
+        <motion.div 
+          className="mx-auto max-w-6xl luxury-panel rounded-[2rem] p-8 md:p-12"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.div 
+            className="mb-10"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
             <p className="section-kicker">From atelier to order</p>
             <h2 className="mt-4 font-serif text-4xl leading-none text-brand-primary md:text-5xl">A four-step cadence for a calmer jewellery purchase.</h2>
-          </div>
+          </motion.div>
 
           <div className="grid gap-8 md:grid-cols-2">
-            {processSteps.map((step) => (
-              <div key={step.number} className="rounded-[1.5rem] border border-black/8 bg-white/55 p-6">
-                <p className="font-serif text-4xl text-brand-accent/55">{step.number}</p>
+            {processSteps.map((step, index) => (
+              <motion.div 
+                key={step.number}
+                className="rounded-[1.5rem] border border-black/8 bg-white/55 p-6"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.15, duration: 0.6 }}
+                whileHover={{ 
+                  y: -5, 
+                  backgroundColor: "rgba(255,255,255,0.75)",
+                  borderColor: "rgba(214,190,118,0.3)"
+                }}
+              >
+                <motion.p 
+                  className="font-serif text-4xl text-brand-accent/55"
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.15 + 0.2, type: "spring", stiffness: 200 }}
+                >
+                  {step.number}
+                </motion.p>
                 <h3 className="mt-4 font-serif text-3xl text-brand-primary">{step.title}</h3>
                 <p className="mt-4 text-sm leading-7 copy-muted">{step.description}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
-      <section className="bg-brand-primary px-4 py-18 text-white md:px-8 md:py-24">
+      <motion.section 
+        className="bg-brand-primary px-4 py-18 text-white md:px-8 md:py-24"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
         <div className="mx-auto max-w-5xl text-center">
-          <p className="section-kicker text-brand-accent/90">Continue browsing</p>
-          <h2 className="mt-5 font-serif text-4xl leading-none md:text-6xl">Explore the collection with the same editorial calm carried through every product page.</h2>
-          <Link href="/collections" className="button-secondary mt-8 border-white/20 bg-white/6 text-white hover:bg-white/10">
-            Explore Collections
-          </Link>
+          <motion.p 
+            className="section-kicker text-brand-accent/90"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            Continue browsing
+          </motion.p>
+          <motion.h2 
+            className="mt-5 font-serif text-4xl leading-none md:text-6xl"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
+            Explore the collection with the same editorial calm carried through every product page.
+          </motion.h2>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Link href="/collections" className="button-secondary mt-8 inline-flex items-center gap-3 border-white/20 bg-white/6 text-white hover:bg-white/10">
+              Explore Collections
+            </Link>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
     </div>
   );
 }

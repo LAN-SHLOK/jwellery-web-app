@@ -81,9 +81,24 @@ export default function ProductDetailClient({ product, pricing, goldRate }: Prop
     `?text=${encodeURIComponent(`Hi, I'm interested in ${product.name}`)}`;
 
   return (
-    <div className="px-4 pb-24 pt-10 md:px-8 md:pb-28 md:pt-12">
-      <div className="mx-auto max-w-7xl">
-        <div className="mb-8 flex flex-wrap items-center gap-3 text-[10px] uppercase tracking-[0.28em] text-brand-text/42">
+    <div className="px-4 pb-24 pt-10 md:px-8 md:pb-28 md:pt-12 relative overflow-hidden">
+      <motion.div
+        className="absolute top-40 right-[5%] w-96 h-96 rounded-full bg-gradient-to-br from-brand-primary/8 to-transparent blur-3xl"
+        animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }}
+        transition={{ duration: 8, repeat: Infinity }}
+      />
+      <motion.div
+        className="absolute bottom-60 left-[8%] w-80 h-80 rounded-full bg-gradient-to-br from-brand-accent/10 to-transparent blur-3xl"
+        animate={{ scale: [1, 1.2, 1], x: [0, 20, 0] }}
+        transition={{ duration: 7, repeat: Infinity, delay: 1.5 }}
+      />
+      <div className="mx-auto max-w-7xl relative z-10">
+        <motion.div
+          className="mb-8 flex flex-wrap items-center gap-3 text-[10px] uppercase tracking-[0.28em] text-brand-text/42"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <Link href="/collections" className="transition-colors hover:text-brand-text">
             Collections
           </Link>
@@ -91,7 +106,7 @@ export default function ProductDetailClient({ product, pricing, goldRate }: Prop
           <span>{product.category ?? 'Jewellery'}</span>
           <span>/</span>
           <span>{product.gold_purity || '22K'} Gold</span>
-        </div>
+        </motion.div>
 
         <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
           <motion.div
@@ -199,25 +214,41 @@ export default function ProductDetailClient({ product, pricing, goldRate }: Prop
               </p>
             </div>
 
-            <div className="luxury-panel rounded-[2rem] p-6 md:p-8">
+            <motion.div
+              className="luxury-panel rounded-[2rem] p-6 md:p-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
               <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
                 <div>
                   <p className="text-[10px] uppercase tracking-[0.28em] text-brand-text/38">Final price</p>
                   <div className="mt-3 flex items-end gap-3">
-                    <span className="font-serif text-4xl leading-none text-brand-primary md:text-5xl">
+                    <motion.span
+                      className="font-serif text-4xl leading-none text-brand-primary md:text-5xl"
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      whileInView={{ scale: 1, opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ type: 'spring', duration: 0.8 }}
+                    >
                       {BRAND_CONFIG.currency.symbol}
                       {pricing.finalPrice.toLocaleString(BRAND_CONFIG.currency.locale)}
-                    </span>
+                    </motion.span>
                     <span className="pb-2 text-[10px] uppercase tracking-[0.28em] text-brand-text/38">GST included</span>
                   </div>
                 </div>
-                <div className="rounded-[1.4rem] border border-black/8 bg-white/55 px-5 py-4">
+                <motion.div
+                  className="rounded-[1.4rem] border border-black/8 bg-white/55 px-5 py-4"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
                   <p className="text-[10px] uppercase tracking-[0.28em] text-brand-text/38">Today&apos;s 22K rate</p>
                   <p className="mt-2 font-serif text-3xl text-brand-primary">
                     {BRAND_CONFIG.currency.symbol}
                     {goldRate.toLocaleString(BRAND_CONFIG.currency.locale)}
                   </p>
-                </div>
+                </motion.div>
               </div>
 
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -226,17 +257,31 @@ export default function ProductDetailClient({ product, pricing, goldRate }: Prop
                   { label: 'Purity', value: product.gold_purity || '22K' },
                   { label: 'Hallmark', value: product.hallmark_number || 'BIS Certified' },
                   { label: 'Category', value: product.category || 'Jewellery' },
-                ].map((item) => (
-                  <div key={item.label} className="rounded-[1.3rem] border border-black/8 bg-white/58 px-5 py-5">
+                ].map((item, idx) => (
+                  <motion.div
+                    key={item.label}
+                    className="rounded-[1.3rem] border border-black/8 bg-white/58 px-5 py-5"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 }}
+                    whileHover={{ scale: 1.03, boxShadow: '0 10px 30px rgba(0,0,0,0.08)' }}
+                  >
                     <p className="text-[10px] uppercase tracking-[0.28em] text-brand-text/38">{item.label}</p>
                     <p className="mt-3 font-serif text-2xl leading-none text-brand-primary">{item.value}</p>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
             <div className="grid gap-5 md:grid-cols-[1fr_0.88fr]">
-              <div className="luxury-panel rounded-[2rem] p-6 md:p-7">
+              <motion.div
+                className="luxury-panel rounded-[2rem] p-6 md:p-7"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+              >
                 <button
                   onClick={() => setShowBreakdown((value) => !value)}
                   className="flex w-full items-center justify-between"
@@ -302,37 +347,63 @@ export default function ProductDetailClient({ product, pricing, goldRate }: Prop
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
+              </motion.div>
 
-              <div className="luxury-panel rounded-[2rem] p-6 md:p-7">
+              <motion.div
+                className="luxury-panel rounded-[2rem] p-6 md:p-7"
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+              >
                 <p className="section-kicker">Assurance</p>
                 <div className="mt-4 space-y-4">
-                  {assurancePoints.map((point) => (
-                    <div key={point} className="flex items-start gap-3 text-sm leading-7 text-brand-text/60">
+                  {assurancePoints.map((point, idx) => (
+                    <motion.div
+                      key={point}
+                      className="flex items-start gap-3 text-sm leading-7 text-brand-text/60"
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: idx * 0.1 }}
+                    >
                       <ShieldCheck size={15} className="mt-1 shrink-0 text-brand-accent" />
                       <span>{point}</span>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             <div className="grid gap-3 md:grid-cols-2">
               {outOfStock ? (
-                <div className="flex h-14 items-center justify-center rounded-full border border-black/8 bg-black/4 text-[10px] uppercase tracking-[0.3em] text-brand-text/38">
+                <motion.div
+                  className="flex h-14 items-center justify-center rounded-full border border-black/8 bg-black/4 text-[10px] uppercase tracking-[0.3em] text-brand-text/38"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
                   Currently unavailable
-                </div>
+                </motion.div>
               ) : (
-                <button
+                <motion.button
                   onClick={handleAddToCart}
                   disabled={justAdded}
                   className={`button-primary h-14 rounded-full ${
                     justAdded ? 'bg-[linear-gradient(135deg,#165f3f_0%,#218a5a_100%)] hover:translate-y-0' : ''
                   }`}
+                  whileHover={!justAdded ? { scale: 1.02 } : {}}
+                  whileTap={!justAdded ? { scale: 0.98 } : {}}
+                  animate={justAdded ? { scale: [1, 1.05, 1] } : {}}
                 >
                   {justAdded ? (
                     <>
-                      <Check size={14} />
+                      <motion.div
+                        initial={{ scale: 0, rotate: -180 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{ type: 'spring', duration: 0.5 }}
+                      >
+                        <Check size={14} />
+                      </motion.div>
                       Added to bag
                     </>
                   ) : (
@@ -341,31 +412,48 @@ export default function ProductDetailClient({ product, pricing, goldRate }: Prop
                       Add to bag
                     </>
                   )}
-                </button>
+                </motion.button>
               )}
 
-              <a
+              <motion.a
                 href={enquireUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="button-secondary h-14 rounded-full"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
-                <Heart size={14} />
+                <motion.div
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <Heart size={14} />
+                </motion.div>
                 Enquire on WhatsApp
-              </a>
+              </motion.a>
             </div>
 
-            <div className="luxury-panel rounded-[2rem] p-6 md:p-7">
+            <motion.div
+              className="luxury-panel rounded-[2rem] p-6 md:p-7"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+            >
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="section-kicker">Styling note</p>
                   <p className="mt-3 font-serif text-3xl leading-none text-brand-primary">Designed for private gifting, bridal layering, and statement-led daily wear.</p>
                 </div>
-                <div className="rounded-full border border-black/8 bg-white/55 p-3 text-brand-accent">
+                <motion.div
+                  className="rounded-full border border-black/8 bg-white/55 p-3 text-brand-accent"
+                  animate={{ rotate: [0, 10, -10, 0] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                >
                   <Sparkles size={18} />
-                </div>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>

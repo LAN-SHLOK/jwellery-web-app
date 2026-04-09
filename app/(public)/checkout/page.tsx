@@ -192,29 +192,74 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center">
-        <h1 className="text-3xl font-serif mb-6 uppercase tracking-widest">Your bag is empty</h1>
-        <Link href="/collections" className="text-xs uppercase tracking-[0.3em] font-bold border-b border-black pb-2">
-          Discover Our Collections
-        </Link>
+      <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center relative overflow-hidden">
+        <motion.div
+          className="absolute top-1/3 left-[20%] w-72 h-72 rounded-full bg-gradient-to-br from-brand-primary/15 to-transparent blur-3xl"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 6, repeat: Infinity }}
+        />
+        <motion.h1
+          className="text-3xl font-serif mb-6 uppercase tracking-widest"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          Your bag is empty
+        </motion.h1>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Link href="/collections" className="text-xs uppercase tracking-[0.3em] font-bold border-b border-black pb-2">
+            Discover Our Collections
+          </Link>
+        </motion.div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen pt-10 pb-16 px-4 md:px-8 md:pt-14 md:pb-24">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16">
+    <div className="min-h-screen pt-10 pb-16 px-4 md:px-8 md:pt-14 md:pb-24 relative overflow-hidden">
+      <motion.div
+        className="absolute top-20 left-[8%] w-96 h-96 rounded-full bg-gradient-to-br from-brand-primary/10 to-transparent blur-3xl"
+        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+        transition={{ duration: 8, repeat: Infinity }}
+      />
+      <motion.div
+        className="absolute bottom-20 right-[12%] w-80 h-80 rounded-full bg-gradient-to-br from-brand-accent/12 to-transparent blur-3xl"
+        animate={{ scale: [1, 1.15, 1], x: [0, -20, 0] }}
+        transition={{ duration: 7, repeat: Infinity, delay: 2 }}
+      />
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 relative z-10">
         
         {/* Left: Multistep Form */}
         <div className="lg:col-span-7 space-y-8 md:space-y-12">
-          <header>
+          <motion.header
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
             <div className="flex items-center gap-4 text-[10px] uppercase font-bold tracking-[0.2em] mb-4">
-              <span className={step >= 1 ? 'text-brand-accent' : 'opacity-30'}>01 Shipping</span>
+              <motion.span
+                className={step >= 1 ? 'text-brand-accent' : 'opacity-30'}
+                animate={{ scale: step === 1 ? [1, 1.1, 1] : 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                01 Shipping
+              </motion.span>
               <span className="opacity-10">/</span>
-              <span className={step >= 2 ? 'text-brand-accent' : 'opacity-30'}>02 Payment</span>
+              <motion.span
+                className={step >= 2 ? 'text-brand-accent' : 'opacity-30'}
+                animate={{ scale: step === 2 ? [1, 1.1, 1] : 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                02 Payment
+              </motion.span>
             </div>
             <h1 className="text-3xl md:text-5xl font-serif">Checkout</h1>
-          </header>
+          </motion.header>
 
           <AnimatePresence mode="wait">
             {step === 1 && (
@@ -258,13 +303,26 @@ export default function CheckoutPage() {
                 </div>
 
                 {stepError && (
-                  <p className="text-xs text-red-500 font-bold uppercase tracking-widest">{stepError}</p>
+                  <motion.p
+                    className="text-xs text-red-500 font-bold uppercase tracking-widest"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    {stepError}
+                  </motion.p>
                 )}
 
-                <button onClick={goToPayment} className="button-primary mt-8 h-14 w-full rounded-full md:mt-12 md:h-16">
+                <motion.button
+                  onClick={goToPayment}
+                  className="button-primary mt-8 h-14 w-full rounded-full md:mt-12 md:h-16"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
                   Continue to Payment
-                  <ArrowRight size={14} />
-                </button>
+                  <motion.div animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
+                    <ArrowRight size={14} />
+                  </motion.div>
+                </motion.button>
               </motion.div>
             )}
 
@@ -277,7 +335,7 @@ export default function CheckoutPage() {
                 className="space-y-6 md:space-y-8 luxury-panel rounded-[2rem] p-5 md:p-12"
               >
                 <div className="space-y-4">
-                  <button
+                  <motion.button
                     type="button"
                     onClick={() => setPaymentMethod('razorpay')}
                     className={`w-full p-6 border flex items-center justify-between text-left transition-colors ${
@@ -285,21 +343,30 @@ export default function CheckoutPage() {
                         ? 'border-brand-accent bg-brand-accent/5'
                         : 'border-black/10 hover:border-black/20'
                     }`}
+                    whileHover={{ scale: 1.01 }}
+                    whileTap={{ scale: 0.99 }}
                   >
                     <div className="flex items-center gap-4">
-                      <CreditCard size={18} className="text-brand-accent" />
+                      <motion.div
+                        animate={{ rotate: paymentMethod === 'razorpay' ? [0, 10, -10, 0] : 0 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        <CreditCard size={18} className="text-brand-accent" />
+                      </motion.div>
                       <div>
                         <p className="text-[10px] uppercase font-bold tracking-widest">Pay with Razorpay</p>
                         <p className="text-[10px] opacity-60">UPI, cards, and netbanking with guided confirmation while gateway access is being finalised.</p>
                       </div>
                     </div>
-                    <div
+                    <motion.div
                       className={`w-4 h-4 rounded-full shrink-0 ${
                         paymentMethod === 'razorpay' ? 'border-4 border-brand-accent' : 'border border-black/20'
                       }`}
+                      animate={{ scale: paymentMethod === 'razorpay' ? [1, 1.2, 1] : 1 }}
+                      transition={{ duration: 0.3 }}
                     />
-                  </button>
-                  <button
+                  </motion.button>
+                  <motion.button
                     type="button"
                     onClick={() => setPaymentMethod('cod')}
                     className={`w-full p-6 border flex items-center justify-between text-left transition-colors ${
@@ -307,38 +374,57 @@ export default function CheckoutPage() {
                         ? 'border-brand-accent bg-brand-accent/5'
                         : 'border-black/10 hover:border-black/20'
                     }`}
+                    whileHover={{ scale: 1.01 }}
+                    whileTap={{ scale: 0.99 }}
                   >
                     <div className="flex items-center gap-4">
-                      <Truck size={18} />
+                      <motion.div
+                        animate={{ x: paymentMethod === 'cod' ? [0, 5, 0] : 0 }}
+                        transition={{ duration: 1, repeat: paymentMethod === 'cod' ? Infinity : 0 }}
+                      >
+                        <Truck size={18} />
+                      </motion.div>
                       <div>
                         <p className="text-[10px] uppercase font-bold tracking-widest">Cash on delivery</p>
                         <p className="text-[10px] opacity-60">Pay when your order arrives</p>
                       </div>
                     </div>
-                    <div
+                    <motion.div
                       className={`w-4 h-4 rounded-full shrink-0 ${
                         paymentMethod === 'cod' ? 'border-4 border-brand-accent' : 'border border-black/20'
                       }`}
+                      animate={{ scale: paymentMethod === 'cod' ? [1, 1.2, 1] : 1 }}
+                      transition={{ duration: 0.3 }}
                     />
-                  </button>
+                  </motion.button>
                 </div>
 
                 {stepError && (
-                  <p className="text-xs text-red-500 font-bold uppercase tracking-widest">{stepError}</p>
+                  <motion.p
+                    className="text-xs text-red-500 font-bold uppercase tracking-widest"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    {stepError}
+                  </motion.p>
                 )}
 
                 <div className="flex gap-6">
-                  <button
+                  <motion.button
                     onClick={() => setStep(1)}
                     className="flex-1 h-16 border border-black/10 text-xs uppercase tracking-[0.2em] font-bold flex items-center justify-center gap-4 hover:bg-black/5 transition-all"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
                     <ArrowLeft size={14} />
                     Back
-                  </button>
-                  <button
+                  </motion.button>
+                  <motion.button
                     onClick={handlePlaceOrder}
                     disabled={isProcessing}
                     className="flex-[2] h-16 bg-brand-primary text-white text-xs uppercase tracking-[0.3em] font-bold flex items-center justify-center gap-4 hover:bg-brand-accent transition-all duration-500 disabled:opacity-50"
+                    whileHover={!isProcessing ? { scale: 1.02 } : {}}
+                    whileTap={!isProcessing ? { scale: 0.98 } : {}}
                   >
                     {isProcessing
                       ? 'Locking prices...'
@@ -346,7 +432,7 @@ export default function CheckoutPage() {
                         ? `Place order - ${BRAND_CONFIG.currency.symbol}${orderTotal.toLocaleString(BRAND_CONFIG.currency.locale)}`
                         : `Pay ${BRAND_CONFIG.currency.symbol}${orderTotal.toLocaleString(BRAND_CONFIG.currency.locale)}`}
                     {!isProcessing && <ShieldCheck size={14} />}
-                  </button>
+                  </motion.button>
                 </div>
               </motion.div>
             )}
@@ -355,7 +441,12 @@ export default function CheckoutPage() {
 
         {/* Right: Order Summary */}
         <div className="lg:col-span-5">
-          <div className="luxury-panel rounded-[2rem] p-6 md:p-10 lg:sticky lg:top-36">
+          <motion.div
+            className="luxury-panel rounded-[2rem] p-6 md:p-10 lg:sticky lg:top-36"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
             <p className="section-kicker mb-4">Order summary</p>
             <h2 className="text-lg md:text-2xl font-serif mb-8 md:mb-10">Locked with today&apos;s gold rate</h2>
             
@@ -395,7 +486,7 @@ export default function CheckoutPage() {
                 Hallmarked & Insured by BIS Standards.
               </p>
             </div>
-          </div>
+          </motion.div>
         </div>
 
       </div>

@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { ArrowRight, Award, ShoppingBag } from 'lucide-react';
 
 import { BRAND_CONFIG } from '@/config/brand';
@@ -23,8 +24,19 @@ export default function ProductCard({ product }: { product: any }) {
   const usingFallbackImage = imageFailed || !hasImage;
 
   const card = (
-    <article className={`group flex h-full flex-col ${outOfStock ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
-      <div className="luxury-panel relative flex-1 overflow-hidden rounded-[1.8rem] p-3">
+    <motion.article
+      className={`group flex h-full flex-col ${outOfStock ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.5 }}
+      whileHover={{ y: -8 }}
+    >
+      <motion.div
+        className="luxury-panel relative flex-1 overflow-hidden rounded-[1.8rem] p-3"
+        whileHover={{ boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}
+        transition={{ duration: 0.3 }}
+      >
         <div className="relative aspect-[4/5] overflow-hidden rounded-[1.35rem] bg-[linear-gradient(180deg,rgba(250,244,235,0.95)_0%,rgba(234,224,210,0.92)_100%)]">
           <div className="absolute inset-x-0 top-0 z-10 flex items-start justify-between p-4">
             <div className="rounded-full border border-white/70 bg-white/75 px-3 py-2 text-[9px] uppercase tracking-[0.26em] text-brand-text/52 shadow-sm backdrop-blur">
@@ -65,17 +77,25 @@ export default function ProductCard({ product }: { product: any }) {
           <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[rgba(31,21,13,0.68)] via-[rgba(31,21,13,0.14)] to-transparent" />
 
           <div className="absolute inset-x-0 bottom-0 z-10 p-5">
-            <div className="flex items-center justify-between rounded-[1.2rem] border border-white/20 bg-white/12 px-4 py-3 text-white backdrop-blur-md transition-transform duration-300 group-hover:-translate-y-1">
+            <motion.div
+              className="flex items-center justify-between rounded-[1.2rem] border border-white/20 bg-white/12 px-4 py-3 text-white backdrop-blur-md"
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.3 }}
+            >
               <div>
                 <p className="text-[8px] uppercase tracking-[0.26em] text-white/55">Weight</p>
                 <p className="mt-1 text-sm font-semibold">{product.gold_weight_grams}g / 22K</p>
               </div>
               {!outOfStock && (
-                <div className="rounded-full border border-white/20 bg-white/10 p-2">
+                <motion.div
+                  className="rounded-full border border-white/20 bg-white/10 p-2"
+                  whileHover={{ scale: 1.1, rotate: -45 }}
+                  transition={{ duration: 0.3 }}
+                >
                   <ArrowRight size={13} />
-                </div>
+                </motion.div>
               )}
-            </div>
+            </motion.div>
           </div>
 
           {outOfStock && (
@@ -86,9 +106,15 @@ export default function ProductCard({ product }: { product: any }) {
             </div>
           )}
         </div>
-      </div>
+      </motion.div>
 
-      <div className="px-2 pt-5">
+      <motion.div
+        className="px-2 pt-5"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.2 }}
+      >
         <div className="flex items-start justify-between gap-4">
           <div>
             <h3 className={`font-serif text-2xl leading-none transition-colors duration-300 ${outOfStock ? 'opacity-40' : 'group-hover:text-brand-accent'}`}>
@@ -124,8 +150,8 @@ export default function ProductCard({ product }: { product: any }) {
             <span className="text-[10px] uppercase tracking-[0.26em] text-brand-text/38">View details</span>
           </div>
         )}
-      </div>
-    </article>
+      </motion.div>
+    </motion.article>
   );
 
   if (outOfStock) {
