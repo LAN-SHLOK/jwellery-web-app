@@ -360,16 +360,6 @@ To check for outdated packages:
 ```bash
 npm outdated
 ```
-
-## 📊 Performance
-
-- Lighthouse score: 90+
-- First Contentful Paint: < 1.5s
-- Time to Interactive: < 3s
-- Image optimization via Next.js Image
-- Code splitting and lazy loading
-- Cached API responses
-
 ---
 
 Built using Next.js and modern web technologies.
