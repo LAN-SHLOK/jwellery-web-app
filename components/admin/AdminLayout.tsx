@@ -1,6 +1,6 @@
 'use client';
 
-import { type ReactNode, useState } from 'react';
+import { type ReactNode, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -73,6 +73,19 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const sectionName = formatSectionName(pathname);
+
+  // Prevent body scroll when sidebar is open on mobile
+  useEffect(() => {
+    if (sidebarOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [sidebarOpen]);
 
   async function handleLogout() {
     await fetch('/api/admin/logout', { method: 'POST' });
@@ -231,10 +244,12 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   );
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,rgba(244,214,153,0.12),transparent_28%),linear-gradient(180deg,#1c160f_0%,#241b13_18%,#f8f4ee_18%,#f8f4ee_100%)] text-brand-text">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#1c160f] via-[#241b13] to-[#f8f4ee] text-brand-text">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(244,214,153,0.12),transparent_28%)]" />
       <div className="pointer-events-none absolute inset-0 soft-grid opacity-[0.18]" />
       <div className="halo-orb absolute left-[-8rem] top-24 h-52 w-52 bg-brand-accent/15" />
       <div className="halo-orb absolute right-[-6rem] top-72 h-44 w-44 bg-white/30" />
+      <div className="halo-orb absolute bottom-[-4rem] left-1/2 h-64 w-64 bg-brand-accent/8" />
 
       <aside className="fixed inset-y-0 left-0 z-50 hidden w-[19rem] overflow-hidden border-r border-white/6 bg-[linear-gradient(180deg,rgba(24,18,12,0.98)_0%,rgba(31,24,17,0.98)_100%)] text-white shadow-[28px_0_90px_rgba(10,8,6,0.22)] md:flex">
         <SidebarContent />
@@ -261,21 +276,20 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
       {sidebarOpen && (
         <>
-          <button
-            type="button"
-            className="fixed inset-0 z-[95] bg-black/55 backdrop-blur-[2px] md:hidden"
+          <div
+            className="fixed inset-0 z-[95] bg-black/60 backdrop-blur-sm md:hidden"
             onClick={() => setSidebarOpen(false)}
             aria-label="Close navigation overlay"
           />
-          <aside className="fixed inset-y-0 left-0 z-[100] w-[18rem] animate-slide-in-left overflow-hidden border-r border-white/10 bg-[linear-gradient(180deg,rgba(24,18,12,0.99)_0%,rgba(31,24,17,0.99)_100%)] text-white shadow-[30px_0_90px_rgba(10,8,6,0.4)] sm:w-[19rem] md:hidden">
+          <aside className="fixed inset-y-0 left-0 z-[100] w-[18rem] animate-slide-in-left overflow-y-auto border-r border-white/10 bg-[linear-gradient(180deg,rgba(24,18,12,0.99)_0%,rgba(31,24,17,0.99)_100%)] text-white shadow-[30px_0_90px_rgba(10,8,6,0.4)] sm:w-[19rem] md:hidden">
             <SidebarContent />
           </aside>
         </>
       )}
 
-      <main className="relative min-h-screen md:ml-[19rem]">
+      <main className="relative min-h-screen bg-gradient-to-b from-transparent via-[#f8f4ee]/50 to-[#f8f4ee] md:ml-[19rem]">
         <div className="mx-auto max-w-7xl px-4 pb-10 pt-24 sm:px-6 sm:pt-28 md:px-8 md:pb-14 md:pt-10">
-          <div className="mb-6 flex flex-col gap-4 rounded-[28px] border border-white/50 bg-white/65 px-5 py-4 shadow-[0_18px_45px_rgba(31,24,17,0.07)] backdrop-blur md:flex-row md:items-center md:justify-between md:px-7">
+          <div className="mb-6 flex flex-col gap-4 rounded-[28px] border border-white/50 bg-white/80 px-5 py-4 shadow-[0_18px_45px_rgba(31,24,17,0.07)] backdrop-blur md:flex-row md:items-center md:justify-between md:px-7">
             <div>
               <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-brand-accent">
                 Operations Suite
@@ -286,13 +300,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             </div>
 
             <div className="flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-[0.24em] text-brand-text/60">
-              <span className="inline-flex items-center gap-2 rounded-full border border-brand-text/10 bg-white/70 px-4 py-2">
-                <span className="h-2 w-2 rounded-full bg-emerald-500" />
+              <span className="inline-flex items-center gap-2 rounded-full border border-brand-text/10 bg-white/90 px-4 py-2 shadow-sm">
+                <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
                 Admin Online
               </span>
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 rounded-full border border-brand-text/10 px-4 py-2 transition hover:border-brand-accent/40 hover:text-brand-accent"
+                className="inline-flex items-center gap-2 rounded-full border border-brand-text/10 bg-white/70 px-4 py-2 transition hover:border-brand-accent/40 hover:bg-white/90 hover:text-brand-accent hover:shadow-sm"
               >
                 Store Preview
                 <ExternalLink size={14} />
