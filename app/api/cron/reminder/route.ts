@@ -2,19 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { getAdminInboxEmail, sendGoldRateReminder } from '@/lib/email';
 
-// Use service role key for cron to bypass RLS
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL || '',
   process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
 );
 
-// GET /api/cron/reminder
-// Triggered by Vercel Cron at 1:45 PM IST (08:15 UTC) daily.
-// Checks if any gold rate has been entered today (IST midnight → now).
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get('authorization');
 
-  // In development, allow without the header for local testing.
   if (process.env.NODE_ENV === 'production' && authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
