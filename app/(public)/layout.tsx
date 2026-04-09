@@ -24,7 +24,7 @@ const houseCodes = ['BIS Hallmarked', '22K Gold Only', 'Live Rate Pricing', 'Ins
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-transparent">
+    <div className="min-h-screen bg-[hsl(36,33%,96%)]">
       <Navbar />
       <CartDrawerRoot />
 

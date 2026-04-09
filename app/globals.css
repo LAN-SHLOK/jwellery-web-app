@@ -17,25 +17,31 @@
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
     background: hsl(36, 33%, 96%);
+    min-height: 100%;
   }
 
   body {
     @apply antialiased;
     min-height: 100vh;
+    min-height: 100dvh;
     color: var(--brand-text);
     background:
       radial-gradient(circle at top left, hsla(42, 70%, 78%, 0.24), transparent 30%),
       radial-gradient(circle at 85% 18%, hsla(32, 55%, 52%, 0.12), transparent 28%),
-      linear-gradient(180deg, hsl(36, 33%, 98%) 0%, hsl(36, 33%, 96%) 100%);
+      hsl(36, 33%, 96%);
     background-attachment: fixed;
-    background-size: cover;
-    background-repeat: no-repeat;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
 
   html, body {
     overflow-x: hidden;
+    background-color: hsl(36, 33%, 96%);
+  }
+
+  #__next {
+    min-height: 100vh;
+    background: hsl(36, 33%, 96%);
   }
 
   h1,
