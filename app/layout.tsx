@@ -9,6 +9,7 @@ const interSans = Inter({
   variable: '--font-sans',
   display: 'swap',
   preload: true,
+  fallback: ['system-ui', 'arial'],
 });
 
 const manropeSans = Manrope({
@@ -16,6 +17,7 @@ const manropeSans = Manrope({
   variable: '--font-sans',
   display: 'swap',
   preload: true,
+  fallback: ['system-ui', 'arial'],
 });
 
 const cormorantSerif = Cormorant_Garamond({
@@ -23,7 +25,8 @@ const cormorantSerif = Cormorant_Garamond({
   variable: '--font-serif',
   display: 'swap',
   preload: true,
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '600'],
+  fallback: ['Georgia', 'serif'],
 });
 
 const playfairSerif = Playfair_Display({
@@ -31,7 +34,8 @@ const playfairSerif = Playfair_Display({
   variable: '--font-serif',
   display: 'swap',
   preload: true,
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '600'],
+  fallback: ['Georgia', 'serif'],
 });
 
 const sansFamilies = {

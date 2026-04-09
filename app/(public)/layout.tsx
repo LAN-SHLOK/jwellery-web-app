@@ -43,7 +43,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                   Jewellery shaped with ceremony, clarity, and quiet confidence.
                 </h3>
               </div>
-              <p className="max-w-md text-sm leading-7 text-white/55">
+              <p className="mt-2 text-sm leading-7 text-white/75">
                 {BRAND_CONFIG.name} brings together hallmark-certified purity, atelier-level finishing, and daily live gold-rate pricing for a client-ready luxury buying experience.
               </p>
               <a
@@ -75,13 +75,13 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
             <div className="space-y-6">
               <div className="space-y-3">
                 <p className="section-kicker text-brand-accent/75">Visit The Atelier</p>
-                <div className="space-y-2 text-sm leading-7 text-white/58">
+                <div className="space-y-2 text-sm leading-7 text-white/75">
                   <p>{BRAND_CONFIG.contact.address}</p>
                   <p>{BRAND_CONFIG.contact.email}</p>
                   <p>{BRAND_CONFIG.contact.whatsapp}</p>
                 </div>
               </div>
-              <div className="grid gap-2 text-[11px] uppercase tracking-[0.28em] text-white/35">
+              <div className="grid gap-2 text-[11px] uppercase tracking-[0.28em] text-white/55">
                 <p>{BRAND_CONFIG.hours.weekdays}</p>
                 <p>{BRAND_CONFIG.hours.sunday}</p>
               </div>
@@ -99,7 +99,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                 </span>
               ))}
             </div>
-            <div className="text-[10px] uppercase tracking-[0.28em] text-white/35">
+            <div className="text-[10px] uppercase tracking-[0.28em] text-white/55">
               &copy; {new Date().getFullYear()} {BRAND_CONFIG.name} · Crafted for modern heirlooms
             </div>
           </div>

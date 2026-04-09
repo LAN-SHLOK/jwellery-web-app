@@ -251,7 +251,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       <div className="halo-orb absolute right-[-6rem] top-72 h-44 w-44 bg-white/30" />
       <div className="halo-orb absolute bottom-[-4rem] left-1/2 h-64 w-64 bg-brand-accent/8" />
 
-      <aside className="fixed inset-y-0 left-0 z-50 hidden w-[19rem] overflow-hidden border-r border-white/6 bg-[linear-gradient(180deg,rgba(24,18,12,0.98)_0%,rgba(31,24,17,0.98)_100%)] text-white shadow-[28px_0_90px_rgba(10,8,6,0.22)] md:flex">
+      <aside className="fixed inset-y-0 left-0 z-50 hidden w-[19rem] overflow-hidden border-r border-white/6 bg-[linear-gradient(180deg,rgba(24,18,12,0.98)_0%,rgba(31,24,17,0.98)_100%)] text-white shadow-[28px_0_90px_rgba(10,8,6,0.22)] md:block">
         <SidebarContent />
       </aside>
 
