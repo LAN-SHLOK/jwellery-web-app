@@ -16,6 +16,8 @@ import {
   ShieldCheck,
   ShoppingBag,
   Sparkles,
+  Star,
+  Tag,
   TrendingUp,
   X,
 } from 'lucide-react';
@@ -57,6 +59,18 @@ const NAV_LINKS: NavLink[] = [
     icon: ShoppingBag,
     name: 'Orders',
     note: 'Fulfilment desk',
+  },
+  {
+    href: '/admin/coupons',
+    icon: Tag,
+    name: 'Coupons',
+    note: 'Discount codes',
+  },
+  {
+    href: '/admin/reviews',
+    icon: Star,
+    name: 'Reviews',
+    note: 'Customer feedback',
   },
 ];
 

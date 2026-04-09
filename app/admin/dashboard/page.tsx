@@ -296,10 +296,12 @@ export default function AdminDashboard() {
                 Quick access to pricing, orders, and key metrics.
               </p>
 
-              <div className="mt-10 grid gap-4 md:grid-cols-3">
+              <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
                 <ActionTile href="/admin/gold-rate" label="Rate Desk" note="Update gold rate" />
                 <ActionTile href="/admin/orders" label="Order Desk" note="Manage orders" />
                 <ActionTile href="/admin/products" label="Product Studio" note="Edit products" />
+                <ActionTile href="/admin/coupons" label="Coupons" note="Create & manage coupons" />
+                <ActionTile href="/admin/reviews" label="Reviews" note="Approve customer reviews" />
               </div>
             </div>
 
