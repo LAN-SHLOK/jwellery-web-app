@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
     // Use limit(1) — .single() throws when multiple rows match, causing false reminders
     const { data: rows, error } = await supabaseAdmin
       .from('gold_rates')
-      .select('created_at')
+      .select('id, created_at')
       .gte('created_at', todayUtcStart.toISOString())
       .limit(1);
 
