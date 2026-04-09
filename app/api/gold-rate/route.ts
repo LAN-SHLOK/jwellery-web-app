@@ -22,14 +22,12 @@ export async function GET() {
       .single();
 
     if (error || !data) {
-      // no rate set yet — return fallback so the site doesn't crash
       console.error('[gold-rate] fetch failed:', error);
       return NextResponse.json({ rate: 6500, isFallback: true, fomoBadge: false });
     }
 
     const todayRate = Number(data.rate_per_gram);
 
-    // FOMO Calc
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
@@ -57,7 +55,6 @@ export async function GET() {
   }
 }
 
-// Admin rate updation
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();

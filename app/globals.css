@@ -27,6 +27,8 @@
       radial-gradient(circle at top left, hsla(42, 70%, 78%, 0.24), transparent 30%),
       radial-gradient(circle at 85% 18%, hsla(32, 55%, 52%, 0.12), transparent 28%),
       linear-gradient(180deg, hsl(36, 33%, 98%) 0%, hsl(36, 33%, 96%) 100%);
+    background-attachment: fixed;
+    background-size: 100% 100%;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
