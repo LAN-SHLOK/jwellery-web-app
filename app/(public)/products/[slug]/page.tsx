@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { BRAND_CONFIG } from '@/config/brand';
 import { calculateFinalPrice } from '@/lib/pricing';
 import { supabase } from '@/lib/supabase';
+import ProductReviews from '@/components/product/ProductReviews';
 
 import ProductDetailClient from './ProductDetailClient';
 
@@ -79,10 +80,17 @@ export default async function ProductPage({ params }: Props) {
   }
 
   return (
-    <ProductDetailClient
-      product={result.product}
-      pricing={result.pricing}
-      goldRate={result.goldRate}
-    />
+    <>
+      <ProductDetailClient
+        product={result.product}
+        pricing={result.pricing}
+        goldRate={result.goldRate}
+      />
+      <div className="px-4 pb-24 md:px-8">
+        <div className="mx-auto max-w-7xl">
+          <ProductReviews productId={result.product.id} productSlug={result.product.slug} />
+        </div>
+      </div>
+    </>
   );
 }

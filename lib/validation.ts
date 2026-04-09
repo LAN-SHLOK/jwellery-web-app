@@ -89,3 +89,29 @@ export const addressSchema = z.object({
   state:    z.string().min(2),
 });
 
+export const reviewSchema = z.object({
+  productId: z.string().uuid(),
+  orderId: z.string().uuid().optional(),
+  customerName: z.string().min(2).max(100),
+  customerEmail: z.string().email(),
+  rating: z.number().int().min(1).max(5),
+  title: z.string().max(200).optional(),
+  reviewText: z.string().min(10).max(2000),
+});
+
+export const couponSchema = z.object({
+  code: z.string().min(3).max(50).regex(/^[A-Z0-9]+$/, 'Coupon code must be uppercase letters and numbers only'),
+  description: z.string().max(500).optional(),
+  discountType: z.enum(['percentage', 'fixed']),
+  discountValue: z.number().positive(),
+  minOrderValue: z.number().min(0).default(0),
+  maxDiscountAmount: z.number().positive().optional(),
+  usageLimit: z.number().int().positive().optional(),
+  validFrom: z.string().datetime().optional(),
+  validUntil: z.string().datetime().optional(),
+  isActive: z.boolean().default(true),
+});
+
+export type ReviewInput = z.infer<typeof reviewSchema>;
+export type CouponInput = z.infer<typeof couponSchema>;
+

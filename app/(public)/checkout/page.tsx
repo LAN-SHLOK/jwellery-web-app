@@ -19,6 +19,11 @@ export default function CheckoutPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [stepError, setStepError] = useState('');
   const [paymentMethod, setPaymentMethod] = useState<'razorpay' | 'cod'>('razorpay');
+  const [couponCode, setCouponCode] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState<any>(null);
+  const [couponDiscount, setCouponDiscount] = useState(0);
+  const [isCouponValidating, setIsCouponValidating] = useState(false);
+  const [couponError, setCouponError] = useState('');
   const [address, setAddress] = useState({
     fullName: '',
     email: '',
@@ -74,6 +79,52 @@ export default function CheckoutPage() {
   const orderTotals = calculateOrderTotals(merchandiseExGst);
   const gstAmount = orderTotals.gst;
   const orderTotal = orderTotals.total;
+  const finalTotal = Math.max(0, orderTotal - couponDiscount);
+
+  async function validateCoupon() {
+    if (!couponCode.trim()) {
+      setCouponError('Please enter a coupon code');
+      return;
+    }
+
+    setIsCouponValidating(true);
+    setCouponError('');
+
+    try {
+      const res = await fetch('/api/coupons/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          code: couponCode,
+          orderTotal,
+          customerEmail: address.email,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!data.valid) {
+        setCouponError(data.error || 'Invalid coupon');
+        setAppliedCoupon(null);
+        setCouponDiscount(0);
+      } else {
+        setAppliedCoupon(data.coupon);
+        setCouponDiscount(data.discount);
+        setCouponError('');
+      }
+    } catch (err) {
+      setCouponError('Failed to validate coupon');
+    } finally {
+      setIsCouponValidating(false);
+    }
+  }
+
+  function removeCoupon() {
+    setAppliedCoupon(null);
+    setCouponDiscount(0);
+    setCouponCode('');
+    setCouponError('');
+  }
 
   const handlePlaceOrder = async () => {
     setIsProcessing(true);
