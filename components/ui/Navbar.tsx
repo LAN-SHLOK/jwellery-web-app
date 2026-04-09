@@ -53,8 +53,9 @@ export default function Navbar() {
             : 'bg-[rgba(255,252,246,0.78)] backdrop-blur-xl'
         }`}
       >
-        <div className="mx-auto flex h-20 max-w-[1440px] items-center justify-between px-4 md:px-8">
-          <div className="flex flex-1 items-center gap-8">
+        <div className="mx-auto flex h-20 max-w-[1440px] items-center justify-between gap-2 px-4 md:gap-0 md:px-8">
+          {/* Left section - Menu button on mobile, Nav links on desktop */}
+          <div className="flex flex-1 items-center gap-8 md:flex-initial">
             <motion.button
               onClick={() => setOpen(true)}
               className="rounded-full border border-black/8 bg-white/60 p-2.5 opacity-75 transition-opacity hover:opacity-100 md:hidden"
@@ -89,7 +90,8 @@ export default function Navbar() {
             </div>
           </div>
 
-          <div className="flex flex-1 justify-center">
+          {/* Center section - Logo */}
+          <div className="flex flex-shrink-0 justify-center md:flex-1">
             <Link href="/" className="group flex flex-col items-center text-center">
               <motion.div
                 whileHover={{ scale: 1.05, rotate: 5 }}
@@ -100,10 +102,11 @@ export default function Navbar() {
                   alt={`${BRAND_CONFIG.name} logo`}
                   width={BRAND_CONFIG.logo.width}
                   height={BRAND_CONFIG.logo.height}
-                  className="mb-1 h-6 w-auto opacity-80 transition-opacity duration-300 group-hover:opacity-100 md:h-7"
+                  className="mb-1 h-5 w-auto opacity-80 transition-opacity duration-300 group-hover:opacity-100 md:h-7"
+                  priority
                 />
               </motion.div>
-              <span className="font-serif text-xl uppercase tracking-[0.22em] text-brand-primary transition-all duration-300 group-hover:tracking-[0.3em] md:text-3xl">
+              <span className="font-serif text-base uppercase tracking-[0.18em] text-brand-primary transition-all duration-300 group-hover:tracking-[0.24em] md:text-3xl md:tracking-[0.22em] md:group-hover:tracking-[0.3em]">
                 {BRAND_CONFIG.name}
               </span>
               <span className="hidden text-[8px] uppercase tracking-[0.42em] text-brand-text/35 md:block">
@@ -112,13 +115,16 @@ export default function Navbar() {
             </Link>
           </div>
 
-          <div className="flex flex-1 items-center justify-end gap-3 md:gap-5">
+          {/* Right section - Ticker and icons */}
+          <div className="flex flex-1 items-center justify-end gap-2 md:gap-5">
+            {/* Ticker - always visible */}
             <div className="block">
               <Ticker />
             </div>
+            {/* Wishlist - hidden on mobile to save space */}
             <Link
               href="/wishlist"
-              className="relative rounded-full border border-black/8 bg-white/55 p-2.5 text-brand-text/35 transition-colors hover:text-brand-accent hover:border-brand-accent/30"
+              className="relative hidden rounded-full border border-black/8 bg-white/55 p-2.5 text-brand-text/35 transition-colors hover:border-brand-accent/30 hover:text-brand-accent md:block"
               title="Wishlist"
               aria-label="Wishlist"
             >
@@ -134,6 +140,7 @@ export default function Navbar() {
                 </motion.span>
               )}
             </Link>
+            {/* Admin - hidden on mobile */}
             <Link
               href="/admin/dashboard"
               className="hidden rounded-full border border-black/8 bg-white/55 p-2.5 text-brand-text/35 transition-colors hover:text-brand-text/70 md:flex"
@@ -142,6 +149,7 @@ export default function Navbar() {
             >
               <Settings size={15} />
             </Link>
+            {/* Cart - always visible */}
             <CartBadge />
           </div>
         </div>

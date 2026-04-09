@@ -43,23 +43,24 @@ export default function Ticker() {
   }, [fomo]);
 
   if (loading) {
-    return <div className="h-10 w-36 rounded-full shimmer" />;
+    return <div className="h-9 w-28 rounded-full shimmer md:h-10 md:w-36" />;
   }
 
   return (
     <div className="relative">
       <button
         onClick={() => fomo && setShowFomo((value) => !value)}
-        className={`flex items-center gap-3 rounded-full border px-4 py-2 text-left transition-colors duration-300 ${
+        className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-left transition-colors duration-300 md:gap-3 md:px-4 md:py-2 ${
           fomo ? 'border-emerald-200 bg-emerald-50/80' : 'border-black/10 bg-white/55'
         }`}
       >
-        <span className="rounded-full bg-brand-primary/6 p-1.5 text-brand-accent">
-          <Sparkles size={12} />
+        <span className="rounded-full bg-brand-primary/6 p-1 text-brand-accent md:p-1.5">
+          <Sparkles size={10} className="md:hidden" />
+          <Sparkles size={12} className="hidden md:block" />
         </span>
         <div className="leading-none">
-          <p className="text-[9px] font-semibold uppercase tracking-[0.3em] opacity-45">22K Live</p>
-          <p className="mt-1 font-serif text-sm font-semibold text-brand-primary">
+          <p className="text-[8px] font-semibold uppercase tracking-[0.25em] opacity-45 md:text-[9px] md:tracking-[0.3em]">22K Live</p>
+          <p className="mt-0.5 font-serif text-xs font-semibold text-brand-primary md:mt-1 md:text-sm">
             {BRAND_CONFIG.currency.symbol}
             {rate?.toLocaleString(BRAND_CONFIG.currency.locale)}
           </p>
@@ -67,12 +68,13 @@ export default function Ticker() {
       </button>
 
       {showFomo && (
-        <div className="absolute right-0 top-full z-50 mt-3 rounded-2xl border border-emerald-200 bg-emerald-700 px-4 py-3 text-white shadow-xl animate-fade-in">
-          <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.25em]">
-            <TrendingDown size={12} />
+        <div className="absolute right-0 top-full z-50 mt-2 w-[280px] rounded-2xl border border-emerald-200 bg-emerald-700 px-4 py-3 text-white shadow-xl animate-fade-in md:mt-3 md:w-auto">
+          <div className="flex items-center gap-2 text-[9px] font-semibold uppercase tracking-[0.2em] md:text-[10px] md:tracking-[0.25em]">
+            <TrendingDown size={11} className="md:hidden" />
+            <TrendingDown size={12} className="hidden md:block" />
             Gold is softer today
           </div>
-          <p className="mt-2 max-w-[14rem] text-[11px] leading-5 text-white/75">
+          <p className="mt-2 max-w-[14rem] text-[10px] leading-5 text-white/75 md:text-[11px]">
             Today&apos;s rate is below the recent average, which makes this a strong time to place an order.
           </p>
         </div>

@@ -12,6 +12,7 @@ const Navbar = dynamic(() => import('@/components/ui/Navbar'), {
 });
 
 const CartDrawerRoot = dynamic(() => import('@/components/cart/CartDrawerRoot'), { ssr: false });
+const MobileBottomNav = dynamic(() => import('@/components/ui/MobileBottomNav'), { ssr: false });
 
 const editorialLinks = [
   { label: 'Collections', href: '/collections' },
@@ -27,8 +28,9 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
     <div className="min-h-screen bg-[hsl(36,33%,96%)]">
       <Navbar />
       <CartDrawerRoot />
+      <MobileBottomNav />
 
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 pb-20 md:pb-0">{children}</main>
 
       <footer className="relative overflow-hidden bg-brand-primary text-white">
         <div className="halo-orb left-[-8rem] top-10 h-64 w-64 bg-[radial-gradient(circle,rgba(214,190,118,0.22)_0%,transparent_70%)]" />

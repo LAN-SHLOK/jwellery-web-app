@@ -537,6 +537,16 @@
   animation: zoomIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+@layer utilities {
+  .safe-area-inset-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-area-inset-top {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .admin-hover-card,
   .admin-chip,
