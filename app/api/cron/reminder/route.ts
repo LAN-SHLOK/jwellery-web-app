@@ -26,7 +26,6 @@ export async function GET(request: NextRequest) {
 
     console.log('[cron] Checking gold rate from:', todayUtcStart.toISOString());
 
-    // Use limit(1) — .single() throws when multiple rows match, causing false reminders
     const { data: rows, error } = await supabaseAdmin
       .from('gold_rates')
       .select('id, created_at')
