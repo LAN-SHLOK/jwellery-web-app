@@ -1,15 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidateTag } from 'next/cache';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@supabase/supabase-js';
 import { shouldShowFomoBadge } from '@/lib/pricing';
 import { goldRateSchema } from '@/lib/validation';
+
+// Use service role key to bypass RLS
+const supabaseAdmin = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+);
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export async function GET() {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from('gold_rates')
       .select('rate_per_gram, created_at')
       .order('created_at', { ascending: false })
@@ -28,7 +34,7 @@ export async function GET() {
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-    const { data: history } = await supabase
+    const { data: history } = await supabaseAdmin
       .from('gold_rates')
       .select('rate_per_gram')
       .gte('created_at', sevenDaysAgo.toISOString());
@@ -63,7 +69,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: msg }, { status: 400 });
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from('gold_rates')
       .insert([{ rate_per_gram: parsed.data.ratePerGram }])
       .select()
