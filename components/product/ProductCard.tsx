@@ -4,13 +4,26 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Award, ShoppingBag } from 'lucide-react';
+import { ArrowRight, Award, ShoppingBag, Heart } from 'lucide-react';
 
 import { BRAND_CONFIG } from '@/config/brand';
 import { getProductFallbackImage, getStorefrontAvailability } from '@/lib/product-presentation';
+import { useWishlist } from '@/lib/store';
 
 export default function ProductCard({ product }: { product: any }) {
   const [imageFailed, setImageFailed] = useState(false);
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const inWishlist = isInWishlist(product.slug);
+
+  const handleWishlistToggle = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (inWishlist) {
+      removeFromWishlist(product.slug);
+    } else {
+      addToWishlist(product);
+    }
+  };
 
   const price = product.pricing?.finalPrice;
   const hasImage = product.images?.length > 0;
@@ -43,6 +56,15 @@ export default function ProductCard({ product }: { product: any }) {
               {product.category ?? 'Jewellery'}
             </div>
             <div className="flex flex-col gap-2">
+              <motion.button
+                onClick={handleWishlistToggle}
+                className="rounded-full border border-white/70 bg-white/75 p-2 shadow-sm backdrop-blur hover:bg-white transition-colors"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+              >
+                <Heart size={14} className={inWishlist ? 'fill-brand-accent text-brand-accent' : 'text-brand-text/52'} />
+              </motion.button>
               {isFeatured && (
                 <span className="rounded-full bg-brand-primary px-3 py-2 text-[8px] uppercase tracking-[0.28em] text-white">
                   Featured
@@ -84,7 +106,7 @@ export default function ProductCard({ product }: { product: any }) {
             >
               <div>
                 <p className="text-[8px] uppercase tracking-[0.26em] text-white/55">Weight</p>
-                <p className="mt-1 text-sm font-semibold">{product.gold_weight_grams}g / 22K</p>
+                <p className="mt-1 text-sm font-semibold">{product.gold_weight_grams}g / {product.gold_purity || '22K'}</p>
               </div>
               {!outOfStock && (
                 <motion.div

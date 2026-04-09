@@ -63,6 +63,7 @@ export default function CheckoutPage() {
       makingChargeType: item.makingChargeType,
       makingChargeValue: item.makingChargeValue,
       jewellerMargin: item.jewellerMargin,
+      goldPurity: (item as any).goldPurity || '22K',
     });
 
   const merchandiseExGst = items.reduce((acc, item) => {
@@ -455,7 +456,7 @@ export default function CheckoutPage() {
                 <div key={item.slug} className="flex justify-between items-start">
                   <div className="space-y-1">
                     <p className="text-[10px] uppercase font-bold tracking-widest">{item.name}</p>
-                    <p className="text-[10px] opacity-40">Qty: {item.quantity} x {item.goldWeight}g</p>
+                    <p className="text-[10px] opacity-40">Qty: {item.quantity} x {item.goldWeight}g {(item as any).goldPurity || '22K'}</p>
                   </div>
                   <span className="text-xs font-serif font-bold opacity-80">
                     {BRAND_CONFIG.currency.symbol}
@@ -467,8 +468,8 @@ export default function CheckoutPage() {
 
             <div className="space-y-4 pt-8 border-t border-black/5">
               <div className="flex justify-between text-[10px] uppercase tracking-widest opacity-60">
-                <span>Gold rate (22K)</span>
-                <span>{BRAND_CONFIG.currency.symbol}{currentRate.toLocaleString()}/g</span>
+                <span>Gold rate</span>
+                <span>{BRAND_CONFIG.currency.symbol}{currentRate.toLocaleString()}/g (22K)</span>
               </div>
               <div className="flex justify-between text-[10px] uppercase tracking-widest opacity-60">
                 <span>Subtotal (excl. GST)</span>

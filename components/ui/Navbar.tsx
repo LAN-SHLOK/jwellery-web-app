@@ -1,14 +1,13 @@
-'use client';
-
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, Settings, X } from 'lucide-react';
+import { Menu, Settings, X, Heart } from 'lucide-react';
 
 import { BRAND_CONFIG } from '@/config/brand';
+import { useWishlist } from '@/lib/store';
 
 const CartBadge = dynamic(() => import('@/components/ui/CartBadge'), { ssr: false });
 const Ticker = dynamic(() => import('@/components/ui/Ticker'), { ssr: false });
@@ -23,6 +22,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const wishlistItems = useWishlist((state) => state.items);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 36);
@@ -114,6 +114,24 @@ export default function Navbar() {
             <div className="hidden lg:block">
               <Ticker />
             </div>
+            <Link
+              href="/wishlist"
+              className="relative rounded-full border border-black/8 bg-white/55 p-2.5 text-brand-text/35 transition-colors hover:text-brand-accent hover:border-brand-accent/30"
+              title="Wishlist"
+              aria-label="Wishlist"
+            >
+              <Heart size={15} className={wishlistItems.length > 0 ? 'fill-brand-accent text-brand-accent' : ''} />
+              {wishlistItems.length > 0 && (
+                <motion.span
+                  className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-brand-accent text-[9px] font-bold text-white"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', duration: 0.5 }}
+                >
+                  {wishlistItems.length}
+                </motion.span>
+              )}
+            </Link>
             <Link
               href="/admin/dashboard"
               className="hidden rounded-full border border-black/8 bg-white/55 p-2.5 text-brand-text/35 transition-colors hover:text-brand-text/70 md:flex"
@@ -208,6 +226,18 @@ export default function Navbar() {
                     className="block rounded-2xl px-4 py-4 text-[11px] uppercase tracking-[0.28em] text-brand-text/60 transition-colors hover:bg-brand-muted hover:text-brand-text"
                   >
                     Shopping Bag
+                  </Link>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 + (navLinks.length + 1) * 0.05 }}
+                >
+                  <Link
+                    href="/wishlist"
+                    className="block rounded-2xl px-4 py-4 text-[11px] uppercase tracking-[0.28em] text-brand-text/60 transition-colors hover:bg-brand-muted hover:text-brand-text"
+                  >
+                    Wishlist {wishlistItems.length > 0 && `(${wishlistItems.length})`}
                   </Link>
                 </motion.div>
               </div>

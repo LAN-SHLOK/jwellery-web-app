@@ -82,7 +82,9 @@ function StatCard({
 
 export default function GoldRateManagement() {
   const [currentRate, setCurrentRate] = useState(0);
+  const [currentRate18k, setCurrentRate18k] = useState(0);
   const [newRate, setNewRate] = useState('');
+  const [newRate18k, setNewRate18k] = useState('');
   const [rateHistory, setRateHistory] = useState<GoldRatePoint[]>([]);
   const [fomoBadge, setFomoBadge] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -102,9 +104,12 @@ export default function GoldRateManagement() {
         const latestData = await latestResponse.json();
         const historyData = historyResponse.ok ? await historyResponse.json() : { history: [] };
         const rate = Number(latestData.rate || 0);
+        const rate18k = Number(latestData.rate18k || 0);
 
         setCurrentRate(rate);
+        setCurrentRate18k(rate18k);
         setNewRate(rate > 0 ? String(rate) : '');
+        setNewRate18k(rate18k > 0 ? String(rate18k) : '');
         setFomoBadge(Boolean(latestData.fomoBadge));
         setRateHistory(historyData.history || []);
       } catch (error) {
@@ -145,9 +150,16 @@ export default function GoldRateManagement() {
     setMessage(null);
 
     const parsedRate = Number.parseFloat(newRate);
+    const parsedRate18k = Number.parseFloat(newRate18k);
 
     if (!Number.isFinite(parsedRate) || parsedRate <= 0) {
-      setMessage({ text: 'Please enter a valid gold rate before saving.', type: 'error' });
+      setMessage({ text: 'Please enter a valid 22K gold rate before saving.', type: 'error' });
+      setIsUpdating(false);
+      return;
+    }
+
+    if (!Number.isFinite(parsedRate18k) || parsedRate18k <= 0) {
+      setMessage({ text: 'Please enter a valid 18K gold rate before saving.', type: 'error' });
       setIsUpdating(false);
       return;
     }
@@ -156,7 +168,7 @@ export default function GoldRateManagement() {
       const response = await fetch('/api/gold-rate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ratePerGram: parsedRate }),
+        body: JSON.stringify({ ratePerGram: parsedRate, rate18k: parsedRate18k }),
       });
       const data = await response.json();
 
@@ -170,11 +182,13 @@ export default function GoldRateManagement() {
       const historyDataResponse = historyResponse.ok ? await historyResponse.json() : { history: [] };
 
       setCurrentRate(Number(latestData.rate || parsedRate));
+      setCurrentRate18k(Number(latestData.rate18k || parsedRate18k));
       setNewRate(String(Number(latestData.rate || parsedRate)));
+      setNewRate18k(String(Number(latestData.rate18k || parsedRate18k)));
       setFomoBadge(Boolean(latestData.fomoBadge));
       setRateHistory(historyDataResponse.history || []);
       setMessage({
-        text: `Gold rate updated to ${formatCurrency(parsedRate)} per gram. Public pricing is now refreshed.`,
+        text: `Gold rates updated: 22K at ${formatCurrency(parsedRate)}, 18K at ${formatCurrency(parsedRate18k)} per gram. Public pricing is now refreshed.`,
         type: 'success',
       });
     } catch (error) {
@@ -200,13 +214,21 @@ export default function GoldRateManagement() {
                 storefront is signalling a better-than-average buying window.
               </p>
 
-              <div className="mt-8 grid gap-4 md:grid-cols-3">
+              <div className="mt-8 grid gap-4 md:grid-cols-4">
                 <div className="admin-hover-card rounded-[26px] border border-brand-text/8 bg-white/75 px-5 py-5">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-brand-text/38">Current rate</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-brand-text/38">22K rate</p>
                   <p className="mt-3 text-3xl font-semibold tracking-[-0.03em] text-brand-primary">
                     {isLoading || currentRate <= 0 ? '...' : formatCurrency(currentRate)}
                   </p>
-                  <p className="mt-2 text-sm text-brand-text/58">Per gram for 22K pricing</p>
+                  <p className="mt-2 text-sm text-brand-text/58">Per gram</p>
+                </div>
+
+                <div className="admin-hover-card rounded-[26px] border border-brand-text/8 bg-white/75 px-5 py-5">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-brand-text/38">18K rate</p>
+                  <p className="mt-3 text-3xl font-semibold tracking-[-0.03em] text-brand-primary">
+                    {isLoading || currentRate18k <= 0 ? '...' : formatCurrency(currentRate18k)}
+                  </p>
+                  <p className="mt-2 text-sm text-brand-text/58">Per gram</p>
                 </div>
 
                 <div className="admin-hover-card rounded-[26px] border border-brand-text/8 bg-white/75 px-5 py-5">
@@ -318,16 +340,15 @@ export default function GoldRateManagement() {
 
           <GoldPanel delay={0.14}>
             <p className="section-kicker">Update the desk</p>
-            <h3 className="mt-3 text-2xl text-brand-primary">Set today&apos;s 22K rate</h3>
+            <h3 className="mt-3 text-2xl text-brand-primary">Set today&apos;s rates</h3>
             <p className="mt-3 max-w-xl text-sm leading-6 text-brand-text/60">
-              Enter the current per-gram value once it is confirmed. This is the only pricing input your
-              catalogue needs for a daily refresh.
+              Enter the current per-gram values for both 22K and 18K gold. These rates will update all product pricing across the catalogue.
             </p>
 
             <form className="mt-8 space-y-6" onSubmit={handleUpdate}>
               <div className="admin-surface rounded-[28px] border border-brand-text/8 bg-white/78 p-5">
                 <label className="text-[10px] font-semibold uppercase tracking-[0.3em] text-brand-text/40">
-                  Price per gram ({BRAND_CONFIG.currency.code})
+                  22K Price per gram ({BRAND_CONFIG.currency.code})
                 </label>
                 <div className="relative mt-4">
                   <span className="absolute left-5 top-1/2 -translate-y-1/2 text-2xl font-serif text-brand-text/35">
@@ -342,6 +363,28 @@ export default function GoldRateManagement() {
                     onChange={(event) => setNewRate(event.target.value)}
                     className="h-20 w-full rounded-[24px] border border-brand-text/8 bg-brand-background pl-12 pr-6 text-3xl font-serif outline-none transition focus:border-brand-accent/50 focus:ring-0"
                     placeholder="6500.00"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="admin-surface rounded-[28px] border border-brand-text/8 bg-white/78 p-5">
+                <label className="text-[10px] font-semibold uppercase tracking-[0.3em] text-brand-text/40">
+                  18K Price per gram ({BRAND_CONFIG.currency.code})
+                </label>
+                <div className="relative mt-4">
+                  <span className="absolute left-5 top-1/2 -translate-y-1/2 text-2xl font-serif text-brand-text/35">
+                    {BRAND_CONFIG.currency.symbol}
+                  </span>
+                  <input
+                    type="number"
+                    step="0.01"
+                    min="1000"
+                    max="50000"
+                    value={newRate18k}
+                    onChange={(event) => setNewRate18k(event.target.value)}
+                    className="h-20 w-full rounded-[24px] border border-brand-text/8 bg-brand-background pl-12 pr-6 text-3xl font-serif outline-none transition focus:border-brand-accent/50 focus:ring-0"
+                    placeholder="4875.00"
                     required
                   />
                 </div>

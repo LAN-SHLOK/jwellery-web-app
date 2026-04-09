@@ -37,6 +37,7 @@ export default function CartPage() {
       makingChargeType: item.makingChargeType,
       makingChargeValue: item.makingChargeValue,
       jewellerMargin: item.jewellerMargin,
+      goldPurity: (item as any).goldPurity || '22K',
     });
 
     return {
@@ -184,7 +185,7 @@ export default function CartPage() {
                         {item.name}
                       </h3>
                     </Link>
-                    <p className="text-xs opacity-40 mt-1">{item.goldWeight}g · 22K Gold</p>
+                    <p className="text-xs opacity-40 mt-1">{item.goldWeight}g · {(item as any).goldPurity || '22K'} Gold</p>
                   </div>
 
                   <div className="flex items-center justify-between mt-4">

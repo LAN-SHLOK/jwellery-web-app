@@ -39,6 +39,7 @@ export default function CartDrawer() {
       makingChargeType: item.makingChargeType,
       makingChargeValue: item.makingChargeValue,
       jewellerMargin: item.jewellerMargin,
+      goldPurity: item.goldPurity || '22K',
     });
     return total + pricing.finalPrice * item.quantity;
   }, 0);
@@ -132,6 +133,7 @@ export default function CartDrawer() {
                       makingChargeType: item.makingChargeType,
                       makingChargeValue: item.makingChargeValue,
                       jewellerMargin: item.jewellerMargin,
+                      goldPurity: item.goldPurity || '22K',
                     });
                     const lineTotal = pricing.finalPrice * item.quantity;
 
@@ -169,7 +171,7 @@ export default function CartDrawer() {
                                 {item.name}
                               </h3>
                             </Link>
-                            <p className="text-[10px] opacity-40 mt-0.5">{item.goldWeight}g · 22K</p>
+                            <p className="text-[10px] opacity-40 mt-0.5">{item.goldWeight}g · {item.goldPurity || '22K'}</p>
                           </div>
 
                           <div className="flex items-center justify-between mt-3">
@@ -215,7 +217,7 @@ export default function CartDrawer() {
             {items.length > 0 && (
               <div className="border-t border-black/5 px-6 py-5 space-y-4 bg-brand-muted/20">
                 <div className="flex justify-between text-[9px] uppercase tracking-widest opacity-40">
-                  <span>22K Rate</span>
+                  <span>Gold Rate</span>
                   <span>{BRAND_CONFIG.currency.symbol}{goldRate.toLocaleString('en-IN')}/g</span>
                 </div>
 

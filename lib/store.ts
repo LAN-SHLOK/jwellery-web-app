@@ -8,11 +8,26 @@ type CartItem = {
   name: string;
   image: string;
   goldWeight: number;
+  goldPurity: '18K' | '22K';
   makingChargeType: 'fixed' | 'percentage';
   makingChargeValue: number;
   jewellerMargin: number;
   quantity: number;
-  priceAtAdded: number; // snapshot for reference only, not used at checkout
+  priceAtAdded: number;
+};
+
+type WishlistItem = {
+  id: string;
+  slug: string;
+  name: string;
+  image: string;
+  goldWeight: number;
+  goldPurity: '18K' | '22K';
+  makingChargeType: 'fixed' | 'percentage';
+  makingChargeValue: number;
+  jewellerMargin: number;
+  category: string;
+  addedAt: number;
 };
 
 type CartStore = {
@@ -25,6 +40,15 @@ type CartStore = {
   setIsOpen: (open: boolean) => void;
   syncPrices: (currentRate: number) => { changed: boolean };
   clearCart: () => void;
+};
+
+type WishlistStore = {
+  items: WishlistItem[];
+  addToWishlist: (product: any) => void;
+  removeFromWishlist: (slug: string) => void;
+  isInWishlist: (slug: string) => boolean;
+  moveToCart: (slug: string, pricing: any) => void;
+  clearWishlist: () => void;
 };
 
 export const useCart = create<CartStore>()(
@@ -59,6 +83,7 @@ export const useCart = create<CartStore>()(
               name: product.name,
               image: product.images?.[0] || '',
               goldWeight: product.gold_weight_grams,
+              goldPurity: product.gold_purity || '22K',
               makingChargeType: product.making_charge_type,
               makingChargeValue: product.making_charge_value,
               jewellerMargin: product.jeweller_margin,
@@ -93,5 +118,74 @@ export const useCart = create<CartStore>()(
       clearCart: () => set({ items: [] }),
     }),
     { name: BRAND_CONFIG.cartStorageKey }
+  )
+);
+
+export const useWishlist = create<WishlistStore>()(
+  persist(
+    (set, get) => ({
+      items: [],
+
+      addToWishlist: (product) => {
+        const { items } = get();
+        const existing = items.find((i) => i.slug === product.slug);
+
+        if (existing) {
+          return;
+        }
+
+        set({
+          items: [
+            ...items,
+            {
+              id: product.id,
+              slug: product.slug,
+              name: product.name,
+              image: product.images?.[0] || '',
+              goldWeight: product.gold_weight_grams,
+              goldPurity: product.gold_purity || '22K',
+              makingChargeType: product.making_charge_type,
+              makingChargeValue: product.making_charge_value,
+              jewellerMargin: product.jeweller_margin,
+              category: product.category || 'jewellery',
+              addedAt: Date.now(),
+            },
+          ],
+        });
+      },
+
+      removeFromWishlist: (slug) => {
+        set({ items: get().items.filter((i) => i.slug !== slug) });
+      },
+
+      isInWishlist: (slug) => {
+        return get().items.some((i) => i.slug === slug);
+      },
+
+      moveToCart: (slug, pricing) => {
+        const item = get().items.find((i) => i.slug === slug);
+        if (!item) return;
+
+        useCart.getState().addItem(
+          {
+            id: item.id,
+            slug: item.slug,
+            name: item.name,
+            images: [item.image],
+            gold_weight_grams: item.goldWeight,
+            gold_purity: item.goldPurity,
+            making_charge_type: item.makingChargeType,
+            making_charge_value: item.makingChargeValue,
+            jeweller_margin: item.jewellerMargin,
+          },
+          pricing
+        );
+
+        get().removeFromWishlist(slug);
+      },
+
+      clearWishlist: () => set({ items: [] }),
+    }),
+    { name: `${BRAND_CONFIG.name.toLowerCase()}-wishlist` }
   )
 );

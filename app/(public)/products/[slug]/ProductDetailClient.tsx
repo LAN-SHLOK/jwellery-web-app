@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -17,7 +15,7 @@ import {
 
 import { BRAND_CONFIG, whatsappChatUrl } from '@/config/brand';
 import { getProductFallbackImage, getStorefrontAvailability } from '@/lib/product-presentation';
-import { useCart } from '@/lib/store';
+import { useCart, useWishlist } from '@/lib/store';
 
 type Pricing = {
   goldValue: number;
@@ -34,7 +32,7 @@ type Product = {
   description: string | null;
   category: string | null;
   gold_weight_grams: number;
-  gold_purity: string;
+  gold_purity: '18K' | '22K';
   making_charge_type: 'fixed' | 'percentage';
   making_charge_value: number;
   jeweller_margin: number;
@@ -61,6 +59,8 @@ export default function ProductDetailClient({ product, pricing, goldRate }: Prop
   const [justAdded, setJustAdded] = useState(false);
   const [imgError, setImgError] = useState<Record<number, boolean>>({});
   const { addItem } = useCart();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const inWishlist = isInWishlist(product.slug);
 
   const images = product.images ?? [];
   const stock = product.stock_quantity ?? 0;
@@ -74,6 +74,14 @@ export default function ProductDetailClient({ product, pricing, goldRate }: Prop
     addItem(product, pricing);
     setJustAdded(true);
     window.setTimeout(() => setJustAdded(false), 1800);
+  }
+
+  function handleWishlistToggle() {
+    if (inWishlist) {
+      removeFromWishlist(product.slug);
+    } else {
+      addToWishlist(product);
+    }
   }
 
   const enquireUrl =
@@ -243,7 +251,7 @@ export default function ProductDetailClient({ product, pricing, goldRate }: Prop
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <p className="text-[10px] uppercase tracking-[0.28em] text-brand-text/38">Today&apos;s 22K rate</p>
+                  <p className="text-[10px] uppercase tracking-[0.28em] text-brand-text/38">Today&apos;s {product.gold_purity || '22K'} rate</p>
                   <p className="mt-2 font-serif text-3xl text-brand-primary">
                     {BRAND_CONFIG.currency.symbol}
                     {goldRate.toLocaleString(BRAND_CONFIG.currency.locale)}
@@ -254,7 +262,7 @@ export default function ProductDetailClient({ product, pricing, goldRate }: Prop
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
                 {[
                   { label: 'Gold weight', value: `${product.gold_weight_grams}g` },
-                  { label: 'Purity', value: product.gold_purity || '22K' },
+                  { label: 'Purity', value: `${product.gold_purity || '22K'} Gold` },
                   { label: 'Hallmark', value: product.hallmark_number || 'BIS Certified' },
                   { label: 'Category', value: product.category || 'Jewellery' },
                 ].map((item, idx) => (
@@ -307,7 +315,7 @@ export default function ProductDetailClient({ product, pricing, goldRate }: Prop
                       <div className="mt-6 space-y-4 border-t border-black/6 pt-6 text-[11px] uppercase tracking-[0.22em] text-brand-text/52">
                         <div className="flex justify-between gap-4">
                           <span>
-                            Gold value ({product.gold_weight_grams}g x {BRAND_CONFIG.currency.symbol}
+                            Gold value ({product.gold_weight_grams}g {product.gold_purity || '22K'} x {BRAND_CONFIG.currency.symbol}
                             {goldRate.toLocaleString(BRAND_CONFIG.currency.locale)})
                           </span>
                           <span>
@@ -415,23 +423,35 @@ export default function ProductDetailClient({ product, pricing, goldRate }: Prop
                 </motion.button>
               )}
 
-              <motion.a
-                href={enquireUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="button-secondary h-14 rounded-full"
+              <motion.button
+                onClick={handleWishlistToggle}
+                className={`button-secondary h-14 rounded-full ${
+                  inWishlist ? 'border-brand-accent bg-brand-accent/10' : ''
+                }`}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
                 <motion.div
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
+                  animate={inWishlist ? { scale: [1, 1.3, 1] } : {}}
+                  transition={{ duration: 0.3 }}
                 >
-                  <Heart size={14} />
+                  <Heart size={14} className={inWishlist ? 'fill-brand-accent text-brand-accent' : ''} />
                 </motion.div>
-                Enquire on WhatsApp
-              </motion.a>
+                {inWishlist ? 'Saved' : 'Save for Later'}
+              </motion.button>
             </div>
+
+            <motion.a
+              href={enquireUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="button-secondary h-14 rounded-full w-full"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Sparkles size={14} />
+              Enquire on WhatsApp
+            </motion.a>
 
             <motion.div
               className="luxury-panel rounded-[2rem] p-6 md:p-7"

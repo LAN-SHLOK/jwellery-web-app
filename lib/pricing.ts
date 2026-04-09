@@ -6,12 +6,27 @@ interface PricingInput {
   makingChargeType: 'fixed' | 'percentage';
   makingChargeValue: number;
   jewellerMargin: number;
+  goldPurity?: '18K' | '22K';
 }
 
-export function calculateFinalPrice(input: PricingInput) {
-  const { goldWeightGrams, todayRatePerGram, makingChargeType, makingChargeValue, jewellerMargin } = input;
+const PURITY_MULTIPLIERS = {
+  '18K': 0.75,
+  '22K': 0.9167,
+} as const;
 
-  const goldValue = goldWeightGrams * todayRatePerGram;
+export function calculateFinalPrice(input: PricingInput) {
+  const {
+    goldWeightGrams,
+    todayRatePerGram,
+    makingChargeType,
+    makingChargeValue,
+    jewellerMargin,
+    goldPurity = '22K',
+  } = input;
+
+  const purityMultiplier = PURITY_MULTIPLIERS[goldPurity];
+  const pureGoldValue = goldWeightGrams * todayRatePerGram * purityMultiplier;
+  const goldValue = Math.round(pureGoldValue * 100) / 100;
 
   let makingCharges = 0;
   if (makingChargeType === 'fixed') {
@@ -30,6 +45,8 @@ export function calculateFinalPrice(input: PricingInput) {
     subtotal: Math.round(subtotal * 100) / 100,
     gst: Math.round(gst * 100) / 100,
     finalPrice: Math.round(finalPrice),
+    purityMultiplier,
+    purity: goldPurity,
   };
 }
 
@@ -53,4 +70,20 @@ export function shouldShowFomoBadge(todayRate: number, last7DaysRates: number[])
 
   const averageRate = last7DaysRates.reduce((sum, rate) => sum + rate, 0) / last7DaysRates.length;
   return todayRate < averageRate;
+}
+
+export function get18KRateFrom22K(rate22K: number): number {
+  return Math.round((rate22K * PURITY_MULTIPLIERS['18K']) / PURITY_MULTIPLIERS['22K']);
+}
+
+export function get22KRateFrom18K(rate18K: number): number {
+  return Math.round((rate18K * PURITY_MULTIPLIERS['22K']) / PURITY_MULTIPLIERS['18K']);
+}
+
+export function getPurityLabel(purity: '18K' | '22K'): string {
+  return purity === '18K' ? '18 Karat (75% Pure)' : '22 Karat (91.67% Pure)';
+}
+
+export function getPurityPercentage(purity: '18K' | '22K'): number {
+  return purity === '18K' ? 75 : 91.67;
 }

@@ -16,17 +16,18 @@ export async function GET() {
   try {
     const { data, error } = await supabaseAdmin
       .from('gold_rates')
-      .select('rate_per_gram, created_at')
+      .select('rate_per_gram, rate_18k, karat, created_at')
       .order('created_at', { ascending: false })
       .limit(1)
       .single();
 
     if (error || !data) {
       console.error('[gold-rate] fetch failed:', error);
-      return NextResponse.json({ rate: 6500, isFallback: true, fomoBadge: false });
+      return NextResponse.json({ rate: 6500, rate18k: 4875, isFallback: true, fomoBadge: false });
     }
 
     const todayRate = Number(data.rate_per_gram);
+    const todayRate18k = data.rate_18k ? Number(data.rate_18k) : Math.round(todayRate * 0.75);
 
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
@@ -44,6 +45,7 @@ export async function GET() {
 
     return NextResponse.json({
       rate: data.rate_per_gram,
+      rate18k: todayRate18k,
       lastUpdated: data.created_at,
       sevenDayAverage: sevenDayAvg,
       fomoBadge: shouldShowFomoBadge(todayRate, recentRates),
@@ -65,9 +67,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: msg }, { status: 400 });
     }
 
+    const rate18k = body.rate18k || Math.round(parsed.data.ratePerGram * 0.75);
+
     const { data, error } = await supabaseAdmin
       .from('gold_rates')
-      .insert([{ rate_per_gram: parsed.data.ratePerGram }])
+      .insert([{ 
+        rate_per_gram: parsed.data.ratePerGram,
+        rate_18k: rate18k,
+        karat: '22K'
+      }])
       .select()
       .single();
 
