@@ -23,6 +23,8 @@ export async function GET(request: NextRequest) {
     );
     const todayUtcStart = new Date(todayIstMidnight.getTime() - istOffsetMs);
 
+    console.log('[cron] Checking gold rate from:', todayUtcStart.toISOString());
+
     // Use limit(1) — .single() throws when multiple rows match, causing false reminders
     const { data: rows, error } = await supabase
       .from('gold_rates')
@@ -30,16 +32,22 @@ export async function GET(request: NextRequest) {
       .gte('created_at', todayUtcStart.toISOString())
       .limit(1);
 
+    console.log('[cron] Query result:', { rows, error, count: rows?.length });
     const rateEnteredToday = !error && rows && rows.length > 0;
 
     if (!rateEnteredToday) {
       const adminEmail = getAdminInboxEmail();
+      console.log('[cron] Admin email:', adminEmail);
+      
       if (!adminEmail) {
         console.error('[cron] no admin inbox configured - cannot send reminder');
         return NextResponse.json({ message: 'Admin inbox not configured', action: 'skipped' });
       }
 
+      console.log('[cron] Attempting to send email to:', adminEmail);
       const emailSent = await sendGoldRateReminder(adminEmail);
+      console.log('[cron] Email send result:', emailSent);
+      
       if (!emailSent) {
         console.error('[cron] Failed to send reminder email');
       }
@@ -48,6 +56,7 @@ export async function GET(request: NextRequest) {
         message: emailSent ? 'Reminder sent' : 'Reminder failed',
         action: 'emailed_admin',
         emailSent,
+        sentTo: adminEmail,
       });
     }
 
