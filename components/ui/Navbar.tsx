@@ -113,7 +113,7 @@ export default function Navbar() {
           </div>
 
           <div className="flex flex-1 items-center justify-end gap-3 md:gap-5">
-            <div className="hidden lg:block">
+            <div className="block">
               <Ticker />
             </div>
             <Link
