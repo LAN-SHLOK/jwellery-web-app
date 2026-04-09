@@ -1,39 +1,39 @@
-# 💎 Jewellery E-Commerce Platform
+#  Jewellery E-Commerce Platform
 
 A modern, full-stack e-commerce platform for 22K gold jewellery with live gold rate pricing, admin dashboard, and integrated payment processing.
 
-## ✨ Features
+##  Features
 
 ### Customer Features
-- 🛍️ Browse jewellery collections by category (Rings, Chains, Earrings, Bangles, Pendants, Necklaces)
-- 💰 Live 22K gold rate pricing with transparent cost breakdown
-- 🛒 Shopping cart with real-time price calculations
-- 📦 Checkout with multiple payment options (Razorpay/COD)
-- 📧 Order confirmation emails
-- 📱 Fully responsive design with custom cursor effects
-- 🎨 Luxury UI with smooth animations
+-  Browse jewellery collections by category (Rings, Chains, Earrings, Bangles, Pendants, Necklaces)
+-  Live 22K gold rate pricing with transparent cost breakdown
+-  Shopping cart with real-time price calculations
+-  Checkout with multiple payment options (Razorpay/COD)
+-  Order confirmation emails
+-  Fully responsive design with custom cursor effects
+-  Luxury UI with smooth animations
 
 ### Admin Features
-- 🔐 Secure admin authentication with JWT
-- 📊 Comprehensive dashboard with analytics
-- 💵 Daily gold rate management
-- 📦 Product management (CRUD operations)
-- 🖼️ Image upload via Cloudinary
-- 📋 Order management and tracking
-- 📈 Revenue and sales analytics
-- ⏰ Automated daily gold rate reminders via cron
+-  Secure admin authentication with JWT
+-  Comprehensive dashboard with analytics
+-  Daily gold rate management
+-  Product management (CRUD operations)
+-  Image upload via Cloudinary
+-  Order management and tracking
+-  Revenue and sales analytics
+-  Automated daily gold rate reminders via cron
 
 ### Technical Features
-- ⚡ Built with Next.js 14 (App Router)
-- 🗄️ Supabase for database and storage
-- 🎨 Tailwind CSS for styling
-- 🔄 Real-time stock management
-- 🔒 Rate limiting for security
-- 📧 SMTP email integration
-- 💳 Razorpay payment gateway
-- 🌐 Demo payment flow for testing
+-  Built with Next.js 14 (App Router)
+-  Supabase for database and storage
+-  Tailwind CSS for styling
+-  Real-time stock management
+-  Rate limiting for security
+-  SMTP email integration
+-  Razorpay payment gateway
+-  Demo payment flow for testing
 
-## 🚀 Tech Stack
+##  Tech Stack
 
 - **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript
@@ -46,7 +46,7 @@ A modern, full-stack e-commerce platform for 22K gold jewellery with live gold r
 - **Email**: Nodemailer (Gmail SMTP)
 - **Deployment**: Vercel
 
-## 📋 Prerequisites
+##  Prerequisites
 
 - Node.js 18+ and npm
 - Supabase account
@@ -54,7 +54,7 @@ A modern, full-stack e-commerce platform for 22K gold jewellery with live gold r
 - Gmail account (for SMTP)
 - Razorpay account (optional, demo mode available)
 
-## 🛠️ Installation
+##  Installation
 
 ### 1. Clone the repository
 
@@ -121,7 +121,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## 🔑 Environment Variables
+##  Environment Variables
 
 All required environment variables are documented in `.env.example`. Key variables:
 
@@ -136,9 +136,9 @@ All required environment variables are documented in `.env.example`. Key variabl
 | `SMTP_PASS` | Gmail app password | ✅ |
 | `CRON_SECRET` | Secret for cron job authentication | ✅ |
 
-⚠️ **Note**: Razorpay keys can be left as placeholders (`rzp_test_placeholder`) to use the demo payment flow.
+ **Note**: Razorpay keys can be left as placeholders (`rzp_test_placeholder`) to use the demo payment flow.
 
-## 📱 Application Structure
+##  Application Structure
 
 ```
 ├── app/
@@ -169,7 +169,7 @@ All required environment variables are documented in `.env.example`. Key variabl
 └── supabase/             # Database functions
 ```
 
-## 🎯 Key Features Explained
+##  Key Features Explained
 
 ### Live Gold Rate Pricing
 
@@ -211,7 +211,7 @@ All required environment variables are documented in `.env.example`. Key variabl
 - Sends email reminder to admin if not updated
 - Configured via `vercel.json`
 
-## 🚀 Deployment
+##  Deployment
 
 ### Deploy to Vercel
 
@@ -237,7 +237,7 @@ git push origin main
    - Sets up daily cron job
    - No manual configuration needed
 
-## 🔒 Security Features
+##  Security Features
 
 - JWT-based admin authentication
 - Rate limiting on login attempts
@@ -247,7 +247,7 @@ git push origin main
 - Environment variable validation
 - SQL injection prevention (Supabase)
 
-## 📧 Email Configuration
+##  Email Configuration
 
 The app uses Gmail SMTP by default. To use Gmail:
 
@@ -260,7 +260,7 @@ The app uses Gmail SMTP by default. To use Gmail:
 
 For other providers (Zoho, Hostinger, etc.), fill in `SMTP_HOST`, `SMTP_PORT`, and `SMTP_SECURE`.
 
-## 🧪 Testing
+##  Testing
 
 ### Test Payment Flow
 
@@ -270,9 +270,9 @@ For other providers (Zoho, Hostinger, etc.), fill in `SMTP_HOST`, `SMTP_PORT`, a
 4. Select "Pay with Razorpay"
 5. You'll be redirected to `/payment/demo`
 6. Test different outcomes:
-   - ✅ Payment approved
-   - ⚠️ Payment declined
-   - ❌ Payment cancelled
+   -  Payment approved
+   -  Payment declined
+   -  Payment cancelled
 
 ### Test Admin Features
 
@@ -280,7 +280,7 @@ For other providers (Zoho, Hostinger, etc.), fill in `SMTP_HOST`, `SMTP_PORT`, a
 2. Use default credentials (see Installation section)
 3. Test dashboard, gold rate updates, product management
 
-## 📝 API Endpoints
+##  API Endpoints
 
 ### Public APIs
 - `GET /api/products` - Get all products
@@ -298,7 +298,7 @@ For other providers (Zoho, Hostinger, etc.), fill in `SMTP_HOST`, `SMTP_PORT`, a
 ### Cron APIs
 - `GET /api/cron/reminder` - Daily gold rate reminder
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### Database Connection Issues
 - Verify Supabase URL and anon key
@@ -320,15 +320,15 @@ For other providers (Zoho, Hostinger, etc.), fill in `SMTP_HOST`, `SMTP_PORT`, a
 - Check JWT_SECRET is set
 - Clear browser cookies and try again
 
-## 📄 License
+##  License
 
 This project is private and proprietary.
 
-## 👥 Support
+##  Support
 
 For issues or questions, contact the development team.
 
-## 🎨 Customization
+##  Customization
 
 ### Branding
 Edit `config/brand.ts` to customize:
@@ -347,7 +347,7 @@ Add/remove product categories in:
 - `app/admin/products/page.tsx`
 - Update database schema if needed
 
-## 🔄 Updates
+##  Updates
 
 To update dependencies:
 
@@ -372,4 +372,4 @@ npm outdated
 
 ---
 
-Built with ❤️ using Next.js and modern web technologies.
+Built using Next.js and modern web technologies.
