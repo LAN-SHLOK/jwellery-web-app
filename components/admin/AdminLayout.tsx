@@ -4,6 +4,7 @@ import { type ReactNode, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowUpRight,
   ExternalLink,
@@ -126,7 +127,12 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             className="rounded-full border border-white/10 p-2 text-white/60 transition hover:border-white/20 hover:text-white md:hidden"
             aria-label="Close navigation"
           >
-            <X size={16} />
+            <motion.div
+              whileHover={{ rotate: 90 }}
+              transition={{ duration: 0.3 }}
+            >
+              <X size={16} />
+            </motion.div>
           </button>
         </div>
 
@@ -247,9 +253,21 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#1c160f] via-[#241b13] to-[#f8f4ee] text-brand-text">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(244,214,153,0.12),transparent_28%)]" />
       <div className="pointer-events-none absolute inset-0 soft-grid opacity-[0.18]" />
-      <div className="halo-orb absolute left-[-8rem] top-24 h-52 w-52 bg-brand-accent/15" />
-      <div className="halo-orb absolute right-[-6rem] top-72 h-44 w-44 bg-white/30" />
-      <div className="halo-orb absolute bottom-[-4rem] left-1/2 h-64 w-64 bg-brand-accent/8" />
+      <motion.div
+        className="halo-orb absolute left-[-8rem] top-24 h-52 w-52 bg-brand-accent/15"
+        animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.25, 0.15] }}
+        transition={{ duration: 8, repeat: Infinity }}
+      />
+      <motion.div
+        className="halo-orb absolute right-[-6rem] top-72 h-44 w-44 bg-white/30"
+        animate={{ scale: [1, 1.15, 1], x: [0, -20, 0] }}
+        transition={{ duration: 7, repeat: Infinity, delay: 1.5 }}
+      />
+      <motion.div
+        className="halo-orb absolute bottom-[-4rem] left-1/2 h-64 w-64 bg-brand-accent/8"
+        animate={{ scale: [1, 1.1, 1], y: [0, 20, 0] }}
+        transition={{ duration: 9, repeat: Infinity, delay: 3 }}
+      />
 
       <aside className="fixed inset-y-0 left-0 z-50 hidden w-[19rem] overflow-hidden border-r border-white/6 bg-[linear-gradient(180deg,rgba(24,18,12,0.98)_0%,rgba(31,24,17,0.98)_100%)] text-white shadow-[28px_0_90px_rgba(10,8,6,0.22)] md:block">
         <SidebarContent />
@@ -264,28 +282,42 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             </p>
           </div>
 
-          <button
+          <motion.button
             onClick={() => setSidebarOpen(true)}
             className="rounded-full border border-white/10 p-2.5 text-white/75 transition hover:border-white/20 hover:text-white"
             aria-label="Open navigation"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             <Menu size={18} />
-          </button>
+          </motion.button>
         </div>
       </div>
 
-      {sidebarOpen && (
-        <>
-          <div
-            className="fixed inset-0 z-[95] bg-black/60 backdrop-blur-sm md:hidden"
-            onClick={() => setSidebarOpen(false)}
-            aria-label="Close navigation overlay"
-          />
-          <aside className="fixed inset-y-0 left-0 z-[100] w-[18rem] animate-slide-in-left overflow-y-auto border-r border-white/10 bg-[linear-gradient(180deg,rgba(24,18,12,0.99)_0%,rgba(31,24,17,0.99)_100%)] text-white shadow-[30px_0_90px_rgba(10,8,6,0.4)] sm:w-[19rem] md:hidden">
-            <SidebarContent />
-          </aside>
-        </>
-      )}
+      <AnimatePresence>
+        {sidebarOpen && (
+          <>
+            <motion.div
+              className="fixed inset-0 z-[95] bg-black/60 backdrop-blur-sm md:hidden"
+              onClick={() => setSidebarOpen(false)}
+              aria-label="Close navigation overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            />
+            <motion.aside
+              className="fixed inset-y-0 left-0 z-[100] w-[18rem] overflow-y-auto border-r border-white/10 bg-[linear-gradient(180deg,rgba(24,18,12,0.99)_0%,rgba(31,24,17,0.99)_100%)] text-white shadow-[30px_0_90px_rgba(10,8,6,0.4)] sm:w-[19rem] md:hidden"
+              initial={{ x: -320 }}
+              animate={{ x: 0 }}
+              exit={{ x: -320 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            >
+              <SidebarContent />
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
 
       <main className="relative min-h-screen bg-gradient-to-b from-transparent via-[#f8f4ee]/50 to-[#f8f4ee] md:ml-[19rem]">
         <div className="mx-auto max-w-7xl px-4 pb-10 pt-24 sm:px-6 sm:pt-28 md:px-8 md:pb-14 md:pt-10">

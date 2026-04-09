@@ -3,6 +3,7 @@
 import { Fragment, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 import { AlertCircle, ArrowRight, CheckCircle2, Clock, Package, ShieldCheck, XCircle } from 'lucide-react';
 
 import { BRAND_CONFIG } from '@/config/brand';
@@ -94,22 +95,49 @@ export default function OrderConfirmationClient() {
 
   if (!orderId || !phone) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-8 text-center">
-        <p className="mb-6 font-serif text-xl opacity-60">No order reference found.</p>
-        <Link
-          href="/collections"
-          className="border-b border-black/30 pb-1 text-xs uppercase tracking-widest transition-colors hover:text-brand-accent"
+      <div className="min-h-screen flex flex-col items-center justify-center px-8 text-center relative overflow-hidden">
+        <motion.div
+          className="absolute top-1/4 left-[20%] w-72 h-72 rounded-full bg-gradient-to-br from-brand-primary/15 to-transparent blur-3xl"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 6, repeat: Infinity }}
+        />
+        <motion.p
+          className="mb-6 font-serif text-xl opacity-60"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 0.6, y: 0 }}
         >
-          Continue shopping
-        </Link>
+          No order reference found.
+        </motion.p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          whileHover={{ scale: 1.05 }}
+        >
+          <Link
+            href="/collections"
+            className="border-b border-black/30 pb-1 text-xs uppercase tracking-widest transition-colors hover:text-brand-accent"
+          >
+            Continue shopping
+          </Link>
+        </motion.div>
       </div>
     );
   }
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-accent border-t-transparent" />
+      <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <motion.div
+          className="absolute top-20 right-[15%] w-80 h-80 rounded-full bg-gradient-to-br from-brand-accent/15 to-transparent blur-3xl"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 5, repeat: Infinity }}
+        />
+        <motion.div
+          className="h-12 w-12 rounded-full border-3 border-brand-accent border-t-transparent"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        />
       </div>
     );
   }
@@ -153,23 +181,74 @@ export default function OrderConfirmationClient() {
   const StatusIcon = isCancelled ? XCircle : isFailed ? AlertCircle : CheckCircle2;
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-center px-4 py-24">
-      <div className={`mb-8 flex h-20 w-20 items-center justify-center rounded-full animate-scale-in ${
-        isCancelled || isFailed
-          ? 'border border-amber-200 bg-amber-50'
-          : 'border border-green-200 bg-green-50'
-      }`}>
-        <StatusIcon size={36} className={`stroke-[1.5] ${statusTone}`} />
-      </div>
+    <div className="min-h-screen bg-white flex flex-col items-center justify-center px-4 py-24 relative overflow-hidden">
+      <motion.div
+        className="absolute top-40 left-[10%] w-96 h-96 rounded-full bg-gradient-to-br from-green-500/10 to-transparent blur-3xl"
+        animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }}
+        transition={{ duration: 8, repeat: Infinity }}
+      />
+      <motion.div
+        className="absolute bottom-40 right-[12%] w-80 h-80 rounded-full bg-gradient-to-br from-brand-accent/12 to-transparent blur-3xl"
+        animate={{ scale: [1, 1.2, 1], x: [0, -20, 0] }}
+        transition={{ duration: 7, repeat: Infinity, delay: 2 }}
+      />
+      <motion.div
+        className={`mb-8 flex h-20 w-20 items-center justify-center rounded-full relative z-10 ${
+          isCancelled || isFailed
+            ? 'border border-amber-200 bg-amber-50'
+            : 'border border-green-200 bg-green-50'
+        }`}
+        initial={{ scale: 0, rotate: -180 }}
+        animate={{ scale: 1, rotate: 0 }}
+        transition={{ type: 'spring', duration: 0.8, delay: 0.2 }}
+      >
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.5, type: 'spring' }}
+        >
+          <StatusIcon size={36} className={`stroke-[1.5] ${statusTone}`} />
+        </motion.div>
+      </motion.div>
 
-      <div className="max-w-md text-center animate-fade-in-up">
-        <p className="mb-3 text-[9px] font-bold uppercase tracking-[0.5em] text-brand-accent">{statusKicker}</p>
-        <h1 className="mb-4 font-serif text-3xl md:text-4xl">{heading}</h1>
-        <p className="mb-8 text-sm leading-relaxed opacity-50">
+      <motion.div
+        className="max-w-md text-center relative z-10"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3, duration: 0.6 }}
+      >
+        <motion.p
+          className="mb-3 text-[9px] font-bold uppercase tracking-[0.5em] text-brand-accent"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          {statusKicker}
+        </motion.p>
+        <motion.h1
+          className="mb-4 font-serif text-3xl md:text-4xl"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+        >
+          {heading}
+        </motion.h1>
+        <motion.p
+          className="mb-8 text-sm leading-relaxed opacity-50"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.5 }}
+          transition={{ delay: 0.7 }}
+        >
           {intro}
-        </p>
+        </motion.p>
 
-        <div className="mb-8 space-y-4 border border-black/5 bg-brand-muted/40 p-6 text-left md:p-8">
+        <motion.div
+          className="mb-8 space-y-4 border border-black/5 bg-brand-muted/40 p-6 text-left md:p-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
+          whileHover={{ boxShadow: '0 10px 30px rgba(0,0,0,0.08)' }}
+        >
           <div className="flex items-center justify-between text-xs">
             <span className="font-bold uppercase tracking-widest opacity-40">Order Reference</span>
             <span className="font-mono text-[11px] opacity-60">{order.id.slice(0, 8).toUpperCase()}</span>
@@ -212,12 +291,17 @@ export default function OrderConfirmationClient() {
           </div>
 
           <div className="border-t border-black/5 pt-4">
-            <p className="flex items-center gap-2 text-[9px] uppercase tracking-widest opacity-30">
+            <motion.p
+              className="flex items-center gap-2 text-[9px] uppercase tracking-widest opacity-30"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.3 }}
+              transition={{ delay: 1 }}
+            >
               <ShieldCheck size={11} />
               Price locked at gold rate used at time of order
-            </p>
+            </motion.p>
           </div>
-        </div>
+        </motion.div>
 
         {email && (
           <p className="mb-8 text-xs opacity-50">
@@ -226,14 +310,26 @@ export default function OrderConfirmationClient() {
         )}
 
         {!isCancelled && !isFailed && (
-          <div className="mb-10 flex items-center justify-center gap-3 text-[9px] uppercase tracking-widest opacity-40">
+          <motion.div
+            className="mb-10 flex items-center justify-center gap-3 text-[9px] uppercase tracking-widest opacity-40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.4 }}
+            transition={{ delay: 1.1 }}
+          >
             {['Order Placed', 'Processing', 'Shipped', 'Delivered'].map((step, index) => (
               <Fragment key={step}>
-                <span className={index === 0 ? 'font-bold text-green-600 opacity-100' : ''}>{step}</span>
+                <motion.span
+                  className={index === 0 ? 'font-bold text-green-600 opacity-100' : ''}
+                  initial={{ scale: 0.8 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 1.2 + index * 0.1 }}
+                >
+                  {step}
+                </motion.span>
                 {index < 3 && <span>&middot;</span>}
               </Fragment>
             ))}
-          </div>
+          </motion.div>
         )}
 
         {isAwaitingPayment && (
@@ -248,25 +344,39 @@ export default function OrderConfirmationClient() {
           </p>
         )}
 
-        <div className="flex flex-col justify-center gap-3 sm:flex-row">
-          <Link
-            href="/collections"
-            className="group inline-flex items-center justify-center gap-2 bg-brand-primary px-8 py-3.5 text-[10px] font-bold uppercase tracking-[0.25em] text-white transition-colors duration-300 hover:bg-brand-accent"
-          >
-            Continue Shopping
-            <ArrowRight size={12} className="transition-transform group-hover:translate-x-1" />
-          </Link>
-          <Link
-            href={`https://wa.me/${BRAND_CONFIG.contact.whatsapp.replace(/\D/g, '')}?text=Hi, my order reference is ${order.id.slice(0, 8).toUpperCase()}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 border border-black/10 px-8 py-3.5 text-[10px] font-bold uppercase tracking-[0.25em] transition-colors duration-300 hover:bg-brand-muted"
-          >
-            <Package size={12} />
-            Track via WhatsApp
-          </Link>
-        </div>
-      </div>
+        <motion.div
+          className="flex flex-col justify-center gap-3 sm:flex-row"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.3 }}
+        >
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link
+              href="/collections"
+              className="group inline-flex items-center justify-center gap-2 bg-brand-primary px-8 py-3.5 text-[10px] font-bold uppercase tracking-[0.25em] text-white transition-colors duration-300 hover:bg-brand-accent"
+            >
+              Continue Shopping
+              <motion.div
+                animate={{ x: [0, 4, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                <ArrowRight size={12} />
+              </motion.div>
+            </Link>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link
+              href={`https://wa.me/${BRAND_CONFIG.contact.whatsapp.replace(/\D/g, '')}?text=Hi, my order reference is ${order.id.slice(0, 8).toUpperCase()}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 border border-black/10 px-8 py-3.5 text-[10px] font-bold uppercase tracking-[0.25em] transition-colors duration-300 hover:bg-brand-muted"
+            >
+              <Package size={12} />
+              Track via WhatsApp
+            </Link>
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

@@ -123,6 +123,12 @@
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 252, 246, 0.82) 100%);
     border: 1px solid var(--brand-border);
     box-shadow: 0 22px 60px rgba(48, 34, 20, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .luxury-panel:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 28px 72px rgba(48, 34, 20, 0.12);
   }
 
   .admin-surface {
@@ -149,9 +155,13 @@
   }
 
   .admin-hover-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-6px);
     border-color: rgba(214, 190, 118, 0.32);
-    box-shadow: 0 28px 60px rgba(48, 34, 20, 0.12);
+    box-shadow: 0 32px 72px rgba(48, 34, 20, 0.14);
+  }
+
+  .admin-hover-card:active {
+    transform: translateY(-2px);
   }
 
   .admin-chip {
@@ -205,8 +215,13 @@
   }
 
   .button-primary:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
     background: linear-gradient(135deg, hsl(42, 50%, 52%) 0%, hsl(33, 42%, 44%) 100%);
+    box-shadow: 0 24px 48px rgba(47, 32, 19, 0.24);
+  }
+
+  .button-primary:active {
+    transform: translateY(0);
   }
 
   .button-secondary {
@@ -218,6 +233,12 @@
   .button-secondary:hover {
     background: rgba(255, 255, 255, 0.74);
     border-color: rgba(57, 40, 24, 0.26);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgba(47, 32, 19, 0.08);
+  }
+
+  .button-secondary:active {
+    transform: translateY(0);
   }
 
   .soft-grid {
@@ -347,6 +368,75 @@
   }
 }
 
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(214, 190, 118, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 40px rgba(214, 190, 118, 0.6);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(-3deg);
+  }
+
+  75% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 .animate-float {
   animation: float 5s ease-in-out infinite;
   will-change: transform;
@@ -387,6 +477,30 @@
 
 .animate-pulse-soft {
   animation: pulseSoft 1.8s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.animate-bounce-soft {
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.animate-wiggle {
+  animation: wiggle 1s ease-in-out infinite;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-slide-in-down {
+  animation: slideInDown 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-zoom-in {
+  animation: zoomIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
