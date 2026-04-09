@@ -481,8 +481,8 @@ export default function CheckoutPage() {
                     {isProcessing
                       ? 'Locking prices...'
                       : paymentMethod === 'cod'
-                        ? `Place order - ${BRAND_CONFIG.currency.symbol}${orderTotal.toLocaleString(BRAND_CONFIG.currency.locale)}`
-                        : `Pay ${BRAND_CONFIG.currency.symbol}${orderTotal.toLocaleString(BRAND_CONFIG.currency.locale)}`}
+                        ? `Place order - ${BRAND_CONFIG.currency.symbol}${finalTotal.toLocaleString(BRAND_CONFIG.currency.locale)}`
+                        : `Pay ${BRAND_CONFIG.currency.symbol}${finalTotal.toLocaleString(BRAND_CONFIG.currency.locale)}`}
                     {!isProcessing && <ShieldCheck size={14} />}
                   </motion.button>
                 </div>
@@ -517,6 +517,64 @@ export default function CheckoutPage() {
               ))}
             </div>
 
+            {/* Coupon Code Section */}
+            <div className="mb-8 pb-8 border-b border-black/5">
+              <p className="text-[10px] uppercase font-bold tracking-widest mb-4 opacity-60">Have a coupon?</p>
+              {!appliedCoupon ? (
+                <div className="space-y-3">
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={couponCode}
+                      onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                      placeholder="Enter code"
+                      className="flex-1 border border-black/10 rounded-lg px-4 py-2 text-sm focus:border-brand-accent outline-none transition-colors"
+                      disabled={isCouponValidating}
+                    />
+                    <motion.button
+                      onClick={validateCoupon}
+                      disabled={isCouponValidating || !couponCode.trim()}
+                      className="px-6 py-2 bg-brand-primary text-white text-[10px] uppercase tracking-widest font-bold rounded-lg hover:bg-brand-accent transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      {isCouponValidating ? 'Checking...' : 'Apply'}
+                    </motion.button>
+                  </div>
+                  {couponError && (
+                    <motion.p
+                      className="text-[10px] text-red-500 font-bold"
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                    >
+                      {couponError}
+                    </motion.p>
+                  )}
+                </div>
+              ) : (
+                <motion.div
+                  className="flex items-center justify-between p-4 bg-emerald-50 border border-emerald-200 rounded-lg"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                >
+                  <div>
+                    <p className="text-[10px] uppercase font-bold tracking-widest text-emerald-700">
+                      {appliedCoupon.code}
+                    </p>
+                    <p className="text-[9px] text-emerald-600 mt-1">
+                      {appliedCoupon.description}
+                    </p>
+                  </div>
+                  <button
+                    onClick={removeCoupon}
+                    className="text-[10px] uppercase tracking-widest font-bold text-red-500 hover:text-red-700 transition-colors"
+                  >
+                    Remove
+                  </button>
+                </motion.div>
+              )}
+            </div>
+
             <div className="space-y-4 pt-8 border-t border-black/5">
               <div className="flex justify-between text-[10px] uppercase tracking-widest opacity-60">
                 <span>Gold rate</span>
@@ -530,9 +588,19 @@ export default function CheckoutPage() {
                 <span>GST (3%)</span>
                 <span>{BRAND_CONFIG.currency.symbol}{gstAmount.toLocaleString(BRAND_CONFIG.currency.locale)}</span>
               </div>
+              {couponDiscount > 0 && (
+                <motion.div
+                  className="flex justify-between text-[10px] uppercase tracking-widest text-emerald-600 font-bold"
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                >
+                  <span>Coupon discount</span>
+                  <span>-{BRAND_CONFIG.currency.symbol}{couponDiscount.toLocaleString(BRAND_CONFIG.currency.locale)}</span>
+                </motion.div>
+              )}
               <div className="flex justify-between text-2xl font-serif pt-4 border-t border-black/5">
                 <span>Total</span>
-                <span>{BRAND_CONFIG.currency.symbol}{orderTotal.toLocaleString(BRAND_CONFIG.currency.locale)}</span>
+                <span>{BRAND_CONFIG.currency.symbol}{finalTotal.toLocaleString(BRAND_CONFIG.currency.locale)}</span>
               </div>
               <p className="text-[8px] uppercase tracking-widest opacity-40 text-center pt-8">
                 Hallmarked & Insured by BIS Standards.
