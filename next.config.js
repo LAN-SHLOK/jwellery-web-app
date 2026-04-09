@@ -12,8 +12,14 @@ const nextConfig = {
   },
   compress: true,
   poweredByHeader: false,
+  reactStrictMode: true,
+  swcMinify: true,
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion'],
+  },
+  // Performance optimizations
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
   },
 };
 

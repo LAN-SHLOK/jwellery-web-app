@@ -18,6 +18,7 @@
     -webkit-text-size-adjust: 100%;
     background: hsl(36, 33%, 96%);
     min-height: 100%;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
@@ -29,9 +30,17 @@
       radial-gradient(circle at top left, hsla(42, 70%, 78%, 0.24), transparent 30%),
       radial-gradient(circle at 85% 18%, hsla(32, 55%, 52%, 0.12), transparent 28%),
       hsl(36, 33%, 96%);
-    background-attachment: fixed;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    touch-action: manipulation;
+  }
+
+  /* Mobile optimization: remove fixed background on mobile */
+  @media (min-width: 768px) {
+    body {
+      background-attachment: fixed;
+    }
   }
 
   html, body {
@@ -93,6 +102,14 @@
     border-bottom: 1px solid var(--brand-border);
   }
 
+  /* Reduce blur on mobile for better performance */
+  @media (max-width: 768px) {
+    .luxury-blur {
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+  }
+
   .gold-gradient {
     background: linear-gradient(135deg, hsl(44, 74%, 75%) 0%, hsl(39, 52%, 60%) 35%, hsl(28, 36%, 44%) 100%);
   }
@@ -151,7 +168,13 @@
       box-shadow 0.34s cubic-bezier(0.22, 1, 0.36, 1),
       border-color 0.34s ease,
       background-color 0.34s ease;
-    will-change: transform;
+  }
+
+  /* Only enable will-change on desktop */
+  @media (min-width: 768px) {
+    .admin-hover-card {
+      will-change: transform;
+    }
   }
 
   .admin-hover-card:hover {
@@ -439,12 +462,20 @@
 
 .animate-float {
   animation: float 5s ease-in-out infinite;
-  will-change: transform;
+}
+
+/* Only enable will-change on desktop */
+@media (min-width: 768px) {
+  .animate-float,
+  .animate-marquee,
+  .animate-fade-in-up,
+  .animate-fade-in {
+    will-change: transform;
+  }
 }
 
 .animate-marquee {
   animation: marquee 22s linear infinite;
-  will-change: transform;
 }
 
 @media (max-width: 768px) {
@@ -455,16 +486,19 @@
   .animate-float {
     animation: none;
   }
+
+  /* Disable heavy animations on mobile */
+  .halo-orb {
+    display: none;
+  }
 }
 
 .animate-fade-in-up {
   animation: fadeInUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-  will-change: opacity, transform;
 }
 
 .animate-fade-in {
   animation: fadeIn 0.6s ease both;
-  will-change: opacity;
 }
 
 .animate-scale-in {
