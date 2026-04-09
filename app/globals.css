@@ -1,0 +1,396 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-primary: hsl(26, 28%, 15%);
+  --brand-accent: hsl(42, 55%, 62%);
+  --brand-text: hsl(26, 18%, 14%);
+  --brand-background: hsl(36, 38%, 97%);
+  --brand-muted: hsl(36, 28%, 93%);
+  --brand-surface: hsla(0, 0%, 100%, 0.84);
+  --brand-border: hsla(26, 18%, 14%, 0.08);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    background: var(--brand-background);
+  }
+
+  body {
+    @apply antialiased;
+    min-height: 100vh;
+    color: var(--brand-text);
+    background:
+      radial-gradient(circle at top left, hsla(42, 70%, 78%, 0.24), transparent 30%),
+      radial-gradient(circle at 85% 18%, hsla(32, 55%, 52%, 0.12), transparent 28%),
+      linear-gradient(180deg, hsl(36, 33%, 98%) 0%, hsl(36, 33%, 96%) 100%);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-serif {
+    font-family: var(--font-serif), Georgia, serif;
+    @apply font-semibold tracking-tight;
+  }
+
+  p,
+  span,
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    font-family: var(--font-sans), sans-serif;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  ::selection {
+    background: var(--brand-accent);
+    color: white;
+  }
+
+  input,
+  textarea,
+  select {
+    cursor: text;
+  }
+
+  input[type='file'],
+  input[type='checkbox'],
+  input[type='radio'] {
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  .luxury-blur {
+    background: rgba(255, 252, 246, 0.78);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--brand-border);
+  }
+
+  .gold-gradient {
+    background: linear-gradient(135deg, hsl(44, 74%, 75%) 0%, hsl(39, 52%, 60%) 35%, hsl(28, 36%, 44%) 100%);
+  }
+
+  .shimmer {
+    background: linear-gradient(90deg, rgba(246, 241, 232, 1) 25%, rgba(238, 232, 223, 1) 50%, rgba(246, 241, 232, 1) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s ease-in-out infinite;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .section-kicker {
+    @apply text-[10px] font-semibold uppercase tracking-[0.42em];
+    color: hsl(38, 42%, 48%);
+  }
+
+  .luxury-panel {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 252, 246, 0.82) 100%);
+    border: 1px solid var(--brand-border);
+    box-shadow: 0 22px 60px rgba(48, 34, 20, 0.08);
+  }
+
+  .admin-surface {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .admin-surface::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.18), transparent 36%, transparent 68%, rgba(214, 190, 118, 0.09));
+    opacity: 0.82;
+    pointer-events: none;
+  }
+
+  .admin-hover-card {
+    transition:
+      transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.34s ease,
+      background-color 0.34s ease;
+    will-change: transform;
+  }
+
+  .admin-hover-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(214, 190, 118, 0.32);
+    box-shadow: 0 28px 60px rgba(48, 34, 20, 0.12);
+  }
+
+  .admin-chip {
+    transition:
+      transform 0.24s ease,
+      border-color 0.24s ease,
+      background-color 0.24s ease,
+      color 0.24s ease,
+      box-shadow 0.24s ease;
+  }
+
+  .admin-chip:hover {
+    transform: translateY(-1px);
+  }
+
+  .admin-chart-shell {
+    transition:
+      transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.28s ease;
+  }
+
+  .admin-chart-shell:hover {
+    transform: translateY(-2px);
+    border-color: rgba(214, 190, 118, 0.26);
+    box-shadow: 0 22px 44px rgba(48, 34, 20, 0.09);
+  }
+
+  .luxury-outline {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .luxury-outline::before {
+    content: '';
+    position: absolute;
+    inset: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .metal-line {
+    background: linear-gradient(90deg, transparent 0%, hsla(42, 55%, 62%, 0.18) 20%, hsla(42, 55%, 62%, 0.7) 50%, hsla(42, 55%, 62%, 0.18) 80%, transparent 100%);
+  }
+
+  .button-primary {
+    @apply inline-flex items-center justify-center gap-3 px-7 py-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-white transition-all duration-300;
+    background: linear-gradient(135deg, hsl(28, 36%, 18%) 0%, hsl(32, 36%, 24%) 100%);
+    box-shadow: 0 18px 35px rgba(47, 32, 19, 0.16);
+  }
+
+  .button-primary:hover {
+    transform: translateY(-1px);
+    background: linear-gradient(135deg, hsl(42, 50%, 52%) 0%, hsl(33, 42%, 44%) 100%);
+  }
+
+  .button-secondary {
+    @apply inline-flex items-center justify-center gap-3 px-7 py-3 text-[10px] font-semibold uppercase tracking-[0.3em] transition-all duration-300;
+    border: 1px solid rgba(57, 40, 24, 0.14);
+    background: rgba(255, 255, 255, 0.42);
+  }
+
+  .button-secondary:hover {
+    background: rgba(255, 255, 255, 0.74);
+    border-color: rgba(57, 40, 24, 0.26);
+  }
+
+  .soft-grid {
+    background-image:
+      linear-gradient(rgba(71, 52, 32, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(71, 52, 32, 0.04) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  .halo-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(10px);
+    pointer-events: none;
+  }
+
+  .copy-muted {
+    color: rgba(40, 29, 18, 0.62);
+  }
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(52, 37, 23, 0.12);
+  border-radius: 9999px;
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulseSoft {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.12);
+    opacity: 0.82;
+  }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-marquee {
+  animation: marquee 22s linear infinite;
+  will-change: transform;
+}
+
+@media (max-width: 768px) {
+  .animate-marquee {
+    animation-duration: 30s;
+  }
+
+  .animate-float {
+    animation: none;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease both;
+  will-change: opacity;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-pulse-soft {
+  animation: pulseSoft 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-hover-card,
+  .admin-chip,
+  .admin-chart-shell {
+    transition: none;
+  }
+
+  .admin-hover-card:hover,
+  .admin-chip:hover,
+  .admin-chart-shell:hover {
+    transform: none;
+    box-shadow: inherit;
+  }
+
+  .animate-pulse-soft {
+    animation: none;
+  }
+}

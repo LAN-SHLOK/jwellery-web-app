@@ -1,0 +1,18 @@
+<svg width="900" height="1125" viewBox="0 0 900 1125" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="1125" fill="#F7F1E8"/>
+  <ellipse cx="450" cy="220" rx="240" ry="150" fill="url(#halo)" opacity="0.72"/>
+  <path d="M250 300C278 228 346 188 450 188C554 188 622 228 650 300" stroke="#C59B54" stroke-width="20" stroke-linecap="round"/>
+  <path d="M290 300C312 246 366 218 450 218C534 218 588 246 610 300" stroke="#D9B36C" stroke-width="12" stroke-linecap="round"/>
+  <path d="M334 304C352 266 392 248 450 248C508 248 548 266 566 304" stroke="#E8D3A7" stroke-width="6" stroke-linecap="round"/>
+  <path d="M450 330L520 418L450 548L380 418L450 330Z" fill="#D9B36C"/>
+  <circle cx="450" cy="418" r="42" fill="#FFF2D5"/>
+  <path d="M364 470C364 470 410 530 450 530C490 530 536 470 536 470" stroke="#8A6A3E" stroke-width="4" stroke-dasharray="6 8"/>
+  <text x="450" y="955" text-anchor="middle" fill="#2E2117" font-family="Georgia, serif" font-size="54" letter-spacing="6">NECKLACE EDIT</text>
+  <text x="450" y="1010" text-anchor="middle" fill="#8A6A3E" font-family="Arial, sans-serif" font-size="18" letter-spacing="10">STATEMENT GOLD LAYERS</text>
+  <defs>
+    <radialGradient id="halo" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(450 220) rotate(90) scale(150 240)">
+      <stop stop-color="#F3D58F"/>
+      <stop offset="1" stop-color="#F3D58F" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>

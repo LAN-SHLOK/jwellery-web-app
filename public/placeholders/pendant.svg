@@ -1,0 +1,15 @@
+<svg width="900" height="1125" viewBox="0 0 900 1125" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="1125" fill="#F8F2E9"/>
+  <circle cx="450" cy="260" r="220" fill="url(#halo)" opacity="0.64"/>
+  <path d="M450 230C450 190 482 158 522 158C562 158 594 190 594 230C594 270 562 302 522 302H500V344C500 390 464 426 418 426C372 426 336 390 336 344C336 298 372 262 418 262H450V230Z" stroke="#C59B54" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M450 422L510 524L450 618L390 524L450 422Z" fill="#DAB46C"/>
+  <path d="M450 462L486 524L450 580L414 524L450 462Z" fill="#FFF1CF"/>
+  <text x="450" y="955" text-anchor="middle" fill="#2E2117" font-family="Georgia, serif" font-size="54" letter-spacing="6">PENDANT EDIT</text>
+  <text x="450" y="1010" text-anchor="middle" fill="#8A6A3E" font-family="Arial, sans-serif" font-size="18" letter-spacing="10">SOFT FLORAL GOLD</text>
+  <defs>
+    <radialGradient id="halo" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(450 260) rotate(90) scale(220)">
+      <stop stop-color="#F4D58C"/>
+      <stop offset="1" stop-color="#F4D58C" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>

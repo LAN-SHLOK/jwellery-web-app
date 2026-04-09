@@ -1,0 +1,20 @@
+<svg width="900" height="1125" viewBox="0 0 900 1125" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="1125" fill="#F6EFE4"/>
+  <ellipse cx="450" cy="260" rx="220" ry="140" fill="url(#halo)" opacity="0.72"/>
+  <g transform="translate(0 40)">
+    <path d="M380 250C380 212 410 182 448 182C486 182 516 212 516 250V302C516 354 474 396 422 396H410C354 396 308 350 308 294C308 238 354 192 410 192" stroke="#C59B54" stroke-width="18" stroke-linecap="round"/>
+    <path d="M512 250C512 212 542 182 580 182C618 182 648 212 648 250V302C648 354 606 396 554 396H542C486 396 440 350 440 294C440 238 486 192 542 192" stroke="#C59B54" stroke-width="18" stroke-linecap="round"/>
+    <circle cx="410" cy="468" r="58" fill="#D7B16A"/>
+    <circle cx="542" cy="468" r="58" fill="#D7B16A"/>
+    <circle cx="410" cy="468" r="24" fill="#FFF2D3"/>
+    <circle cx="542" cy="468" r="24" fill="#FFF2D3"/>
+  </g>
+  <text x="450" y="955" text-anchor="middle" fill="#2E2117" font-family="Georgia, serif" font-size="54" letter-spacing="6">JHUMKA EDIT</text>
+  <text x="450" y="1010" text-anchor="middle" fill="#8A6A3E" font-family="Arial, sans-serif" font-size="18" letter-spacing="10">CEREMONIAL EARRINGS</text>
+  <defs>
+    <radialGradient id="halo" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(450 260) rotate(90) scale(140 220)">
+      <stop stop-color="#F1D496"/>
+      <stop offset="1" stop-color="#F1D496" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>

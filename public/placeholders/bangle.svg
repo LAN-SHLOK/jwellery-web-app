@@ -1,0 +1,18 @@
+<svg width="900" height="1125" viewBox="0 0 900 1125" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="1125" fill="#F7F0E7"/>
+  <circle cx="450" cy="260" r="210" fill="url(#halo)" opacity="0.7"/>
+  <circle cx="362" cy="520" r="132" stroke="#C59B54" stroke-width="30"/>
+  <circle cx="538" cy="520" r="132" stroke="#D8B16A" stroke-width="30"/>
+  <circle cx="362" cy="520" r="80" stroke="#E8D3A7" stroke-width="8"/>
+  <circle cx="538" cy="520" r="80" stroke="#E8D3A7" stroke-width="8"/>
+  <path d="M306 520H418" stroke="#8A6A3E" stroke-width="3" stroke-dasharray="8 8"/>
+  <path d="M482 520H594" stroke="#8A6A3E" stroke-width="3" stroke-dasharray="8 8"/>
+  <text x="450" y="955" text-anchor="middle" fill="#2E2117" font-family="Georgia, serif" font-size="54" letter-spacing="6">BANGLE SET</text>
+  <text x="450" y="1010" text-anchor="middle" fill="#8A6A3E" font-family="Arial, sans-serif" font-size="18" letter-spacing="10">TEMPLE GOLD STAPLES</text>
+  <defs>
+    <radialGradient id="halo" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(450 260) rotate(90) scale(210)">
+      <stop stop-color="#F3D898"/>
+      <stop offset="1" stop-color="#F3D898" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>
