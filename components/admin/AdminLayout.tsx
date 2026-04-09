@@ -333,7 +333,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         )}
       </AnimatePresence>
 
-      <main className="relative min-h-screen bg-gradient-to-b from-transparent via-[#f8f4ee]/50 to-[#f8f4ee] md:ml-[19rem]">
+      <main className="relative min-h-screen bg-[#f8f4ee] md:ml-[19rem]">
         <div className="mx-auto max-w-7xl px-4 pb-10 pt-24 sm:px-6 sm:pt-28 md:px-8 md:pb-14 md:pt-10">
           <div className="mb-6 flex flex-col gap-4 rounded-[28px] border border-white/50 bg-white/80 px-5 py-4 shadow-[0_18px_45px_rgba(31,24,17,0.07)] backdrop-blur md:flex-row md:items-center md:justify-between md:px-7">
             <div>
