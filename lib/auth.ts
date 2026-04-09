@@ -43,3 +43,26 @@ export async function deleteSession() {
     path: '/',
   });
 }
+
+export async function verifyAdminSession(request: Request) {
+  const cookieHeader = request.headers.get('cookie');
+  if (!cookieHeader) {
+    return { valid: false };
+  }
+
+  const token = cookieHeader
+    .split(';')
+    .find((c) => c.trim().startsWith('admin_session='))
+    ?.split('=')[1];
+
+  if (!token) {
+    return { valid: false };
+  }
+
+  const payload = await verifySession(token);
+  if (!payload) {
+    return { valid: false };
+  }
+
+  return { valid: true, userId: payload.userId as string };
+}
