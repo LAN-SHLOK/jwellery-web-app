@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@supabase/supabase-js';
 import { getAdminInboxEmail, sendGoldRateReminder } from '@/lib/email';
+
+// Use service role key for cron to bypass RLS
+const supabaseAdmin = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+);
 
 // GET /api/cron/reminder
 // Triggered by Vercel Cron at 1:45 PM IST (08:15 UTC) daily.
@@ -26,7 +32,7 @@ export async function GET(request: NextRequest) {
     console.log('[cron] Checking gold rate from:', todayUtcStart.toISOString());
 
     // Use limit(1) — .single() throws when multiple rows match, causing false reminders
-    const { data: rows, error } = await supabase
+    const { data: rows, error } = await supabaseAdmin
       .from('gold_rates')
       .select('created_at')
       .gte('created_at', todayUtcStart.toISOString())
