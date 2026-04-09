@@ -211,31 +211,6 @@ All required environment variables are documented in `.env.example`. Key variabl
 - Sends email reminder to admin if not updated
 - Configured via `vercel.json`
 
-##  Deployment
-
-### Deploy to Vercel
-
-1. **Push code to GitHub**:
-```bash
-git add .
-git commit -m "Initial commit"
-git push origin main
-```
-
-2. **Import project in Vercel**:
-   - Go to [vercel.com](https://vercel.com)
-   - Click "New Project"
-   - Import your GitHub repository
-
-3. **Set environment variables**:
-   - Copy all variables from `.env.local`
-   - Add them in Vercel project settings
-   - Deploy
-
-4. **Cron job automatically activates**:
-   - Vercel reads `vercel.json`
-   - Sets up daily cron job
-   - No manual configuration needed
 
 ##  Security Features
 
