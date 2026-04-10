@@ -38,6 +38,7 @@ export async function GET() {
         makingChargeType: p.making_charge_type as 'fixed' | 'percentage',
         makingChargeValue: p.making_charge_value,
         jewellerMargin: p.jeweller_margin,
+        goldPurity: p.gold_purity as '18K' | '22K',
       }),
     }));
 

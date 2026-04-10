@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, StarHalf, CheckCircle, MessageSquare, Send } from 'lucide-react';
 
@@ -34,11 +34,7 @@ export default function ProductReviews({ productId, productSlug }: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
 
-  useEffect(() => {
-    fetchReviews();
-  }, [productSlug]);
-
-  async function fetchReviews() {
+  const fetchReviews = useCallback(async () => {
     try {
       const res = await fetch(`/api/reviews?slug=${productSlug}`);
       const data = await res.json();
@@ -48,7 +44,11 @@ export default function ProductReviews({ productId, productSlug }: Props) {
     } finally {
       setIsLoading(false);
     }
-  }
+  }, [productSlug]);
+
+  useEffect(() => {
+    fetchReviews();
+  }, [fetchReviews]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

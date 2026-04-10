@@ -10,6 +10,7 @@ import { checkoutSchema } from '@/lib/validation';
 type ProductRecord = {
   category: string | null;
   gold_weight_grams: number;
+  gold_purity: '18K' | '22K';
   id: string;
   is_active: boolean;
   jeweller_margin: number;
@@ -81,6 +82,7 @@ function buildOrderSnapshot(
       makingChargeType: product.making_charge_type,
       makingChargeValue: product.making_charge_value,
       jewellerMargin: product.jeweller_margin,
+      goldPurity: product.gold_purity as '18K' | '22K',
     });
 
     subtotal += pricing.subtotal * cartItem.quantity;

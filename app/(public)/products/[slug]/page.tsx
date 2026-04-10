@@ -44,6 +44,7 @@ async function getProduct(slug: string) {
     makingChargeType: product.making_charge_type as 'fixed' | 'percentage',
     makingChargeValue: product.making_charge_value,
     jewellerMargin: product.jeweller_margin,
+    goldPurity: product.gold_purity as '18K' | '22K',
   });
 
   return { product, pricing, goldRate };
