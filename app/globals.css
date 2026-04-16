@@ -1,0 +1,251 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-primary: hsl(26, 28%, 15%);
+  --brand-accent: hsl(42, 55%, 62%);
+  --brand-text: hsl(26, 18%, 14%);
+  --brand-background: hsl(0, 0%, 100%);
+  --brand-muted: hsl(0, 0%, 96%);
+  --brand-surface: hsl(0, 0%, 100%);
+  --brand-border: hsl(0, 0%, 90%);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    background: white;
+    min-height: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply antialiased;
+    min-height: 100vh;
+    min-height: 100dvh;
+    color: hsl(0, 0%, 20%);
+    background: white;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    touch-action: manipulation;
+  }
+
+  html, body {
+    overflow-x: hidden;
+    background-color: white;
+  }
+
+  #__next {
+    min-height: 100vh;
+    background: white;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-serif {
+    font-family: var(--font-serif), Georgia, serif;
+  }
+
+  p,
+  span,
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    font-family: var(--font-sans), sans-serif;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  ::selection {
+    background: hsl(0, 0%, 20%);
+    color: white;
+  }
+
+  input,
+  textarea,
+  select {
+    cursor: text;
+  }
+
+  input[type='file'],
+  input[type='checkbox'],
+  input[type='radio'] {
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  /* Smooth card hover animations */
+  .card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.08), 0 8px 16px -4px rgba(0, 0, 0, 0.04);
+  }
+
+  .card-hover:active {
+    transform: translateY(-2px);
+  }
+
+  /* Button hover animations */
+  .btn-hover {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-hover:hover {
+    transform: scale(1.02);
+  }
+
+  .btn-hover:active {
+    transform: scale(0.98);
+  }
+
+  /* Link hover animations */
+  .link-hover {
+    position: relative;
+    transition: color 0.2s ease;
+  }
+
+  .link-hover::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: currentColor;
+    transition: width 0.3s ease;
+  }
+
+  .link-hover:hover::after {
+    width: 100%;
+  }
+
+  /* Image hover zoom */
+  .img-hover {
+    overflow: hidden;
+  }
+
+  .img-hover img {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .img-hover:hover img {
+    transform: scale(1.05);
+  }
+
+  /* Magnetic hover effect */
+  .magnetic-hover {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .magnetic-hover:hover {
+    transform: scale(1.08) rotate(1deg);
+  }
+
+  /* Glow effect on hover */
+  .glow-hover {
+    transition: all 0.3s ease;
+  }
+
+  .glow-hover:hover {
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.5), 0 0 40px rgba(251, 191, 36, 0.3);
+    transform: translateY(-2px);
+  }
+
+  /* Shimmer effect */
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shimmer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .shimmer:hover::before {
+    left: 100%;
+  }
+
+  /* Ripple effect */
+  .ripple-hover {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ripple-hover::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+  }
+
+  .ripple-hover:hover::after {
+    width: 300px;
+    height: 300px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 9999px;
+  }
+
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer utilities {
+  .safe-area-inset-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-area-inset-top {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

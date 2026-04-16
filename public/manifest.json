@@ -1,0 +1,35 @@
+{
+  "name": "Innov8 Jewels - Premium 22K Gold Jewelry",
+  "short_name": "Innov8 Jewels",
+  "description": "Modern heirlooms in 22K gold. BIS hallmarked jewelry with live gold pricing.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFCF6",
+  "theme_color": "#D6BE76",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/logo-placeholder.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["shopping", "lifestyle"],
+  "shortcuts": [
+    {
+      "name": "Browse Collections",
+      "short_name": "Collections",
+      "description": "View all jewelry collections",
+      "url": "/collections",
+      "icons": [{ "src": "/logo-placeholder.svg", "sizes": "96x96" }]
+    },
+    {
+      "name": "Shopping Cart",
+      "short_name": "Cart",
+      "description": "View your cart",
+      "url": "/cart",
+      "icons": [{ "src": "/logo-placeholder.svg", "sizes": "96x96" }]
+    }
+  ]
+}

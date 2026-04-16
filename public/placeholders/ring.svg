@@ -1,0 +1,16 @@
+<svg width="900" height="1125" viewBox="0 0 900 1125" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="1125" fill="#F7F0E6"/>
+  <circle cx="450" cy="320" r="250" fill="url(#glow)" opacity="0.7"/>
+  <circle cx="450" cy="610" r="170" stroke="#C59B54" stroke-width="34"/>
+  <circle cx="450" cy="610" r="102" stroke="#E4C88C" stroke-width="8" opacity="0.9"/>
+  <path d="M450 250L478 300L532 328L478 356L450 408L422 356L368 328L422 300L450 250Z" fill="#E4C88C"/>
+  <circle cx="450" cy="328" r="48" fill="#FFF5DB"/>
+  <text x="450" y="955" text-anchor="middle" fill="#2E2117" font-family="Georgia, serif" font-size="54" letter-spacing="6">CLASSIC RING</text>
+  <text x="450" y="1010" text-anchor="middle" fill="#8A6A3E" font-family="Arial, sans-serif" font-size="18" letter-spacing="10">22K HALLMARK COLLECTION</text>
+  <defs>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(450 320) rotate(90) scale(250)">
+      <stop stop-color="#F7D893"/>
+      <stop offset="1" stop-color="#F7D893" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>

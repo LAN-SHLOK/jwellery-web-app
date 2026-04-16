@@ -1,0 +1,49 @@
+<svg width="160" height="60" viewBox="0 0 160 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F4D27C"/>
+      <stop offset="45%" stop-color="#C9973E"/>
+      <stop offset="100%" stop-color="#8A6A2E"/>
+    </linearGradient>
+    <linearGradient id="goldShine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F9E8A0"/>
+      <stop offset="50%" stop-color="#D4A843"/>
+      <stop offset="100%" stop-color="#9B7030"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Outer diamond frame -->
+  <polygon points="30,4 56,30 30,56 4,30" fill="none" stroke="url(#gold)" stroke-width="1.2" opacity="0.6"/>
+
+  <!-- Inner diamond -->
+  <polygon points="30,11 49,30 30,49 11,30" fill="none" stroke="url(#goldShine)" stroke-width="0.8" opacity="0.9"/>
+
+  <!-- Center gem facets -->
+  <polygon points="30,18 42,30 30,42 18,30" fill="url(#gold)" opacity="0.15"/>
+  <polygon points="30,18 42,30 30,30" fill="url(#goldShine)" opacity="0.5"/>
+  <polygon points="30,30 42,30 30,42" fill="url(#gold)" opacity="0.3"/>
+  <polygon points="30,18 18,30 30,30" fill="url(#gold)" opacity="0.35"/>
+  <polygon points="30,30 18,30 30,42" fill="url(#goldShine)" opacity="0.2"/>
+
+  <!-- Center dot -->
+  <circle cx="30" cy="30" r="2.5" fill="url(#goldShine)" filter="url(#glow)"/>
+
+  <!-- Corner accent marks -->
+  <line x1="30" y1="4" x2="30" y2="9" stroke="url(#gold)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="30" y1="51" x2="30" y2="56" stroke="url(#gold)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="4" y1="30" x2="9" y2="30" stroke="url(#gold)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="51" y1="30" x2="56" y2="30" stroke="url(#gold)" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- Wordmark: INNOV8 -->
+  <text x="68" y="27" fill="url(#gold)" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="700" letter-spacing="4" filter="url(#glow)">INNOV8</text>
+
+  <!-- Thin rule -->
+  <line x1="68" y1="32" x2="152" y2="32" stroke="url(#gold)" stroke-width="0.5" opacity="0.7"/>
+
+  <!-- Sub-wordmark: JEWELS -->
+  <text x="68" y="43" fill="url(#gold)" font-family="Georgia, 'Times New Roman', serif" font-size="8" letter-spacing="7" opacity="0.85">JEWELS</text>
+</svg>

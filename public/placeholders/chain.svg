@@ -1,0 +1,25 @@
+<svg width="900" height="1125" viewBox="0 0 900 1125" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="1125" fill="#F8F2E8"/>
+  <circle cx="450" cy="240" r="220" fill="url(#halo)" opacity="0.65"/>
+  <g stroke="#C59B54" stroke-width="20" stroke-linecap="round">
+    <path d="M300 330C322 284 372 248 450 248C528 248 578 284 600 330"/>
+    <path d="M332 330C348 302 385 278 450 278C515 278 552 302 568 330"/>
+    <path d="M364 332C378 316 404 304 450 304C496 304 522 316 536 332"/>
+  </g>
+  <g fill="#D8B16A">
+    <rect x="286" y="328" width="28" height="28" rx="14"/>
+    <rect x="586" y="328" width="28" height="28" rx="14"/>
+    <rect x="320" y="328" width="28" height="28" rx="14"/>
+    <rect x="552" y="328" width="28" height="28" rx="14"/>
+    <rect x="354" y="329" width="28" height="28" rx="14"/>
+    <rect x="518" y="329" width="28" height="28" rx="14"/>
+  </g>
+  <text x="450" y="955" text-anchor="middle" fill="#2E2117" font-family="Georgia, serif" font-size="54" letter-spacing="6">CHAIN EDIT</text>
+  <text x="450" y="1010" text-anchor="middle" fill="#8A6A3E" font-family="Arial, sans-serif" font-size="18" letter-spacing="10">LAYERED GOLD LINKS</text>
+  <defs>
+    <radialGradient id="halo" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(450 240) rotate(90) scale(220)">
+      <stop stop-color="#F4D58C"/>
+      <stop offset="1" stop-color="#F4D58C" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>
